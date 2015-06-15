@@ -1,39 +1,37 @@
-package login;
-
-import java.io.IOException;
+package controller;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @ManagedBean
 @ViewScoped
 public class SecurityBacking {
 	
-	public String currentUser(){
+	public String invalidateSession(){
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/client/index.jsf?faces-redirect=true";
+	}
+	
+	public String getWelcome(){
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		
-		return request.getUserPrincipal().getName();
+		return "Buongiorno "+request.getUserPrincipal().getName();
 	}
 	
-	public void logout() {
+	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 
 		try {
 			request.logout();
-			response.sendRedirect(request.getContextPath()+ "/client/index.jsf");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "/client/index.jsf?faces-redirect=true";
 	}
 }

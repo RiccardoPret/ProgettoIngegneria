@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>Admin Page</h:head>
 <h:body>
-	<p>Bentornato admin</p>
+	<h:outputText id="out" value="#{securityBacking.welcome}"/>
 	<h:form>
 		<h:commandButton action="#{securityBacking.logout}" value="Logout" />
 	</h:form>
