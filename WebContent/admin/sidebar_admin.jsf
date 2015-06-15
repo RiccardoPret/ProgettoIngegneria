@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition>
+		<h1 id="logo"><a href="#">#{msgs.name}</a></h1>
+		<h:form>
+		<ui:param name="view" value="#{facesContext.viewRoot.viewId}" />
+			<nav id="nav">
+				<ul>
+					<li class="#{view == '/cliente/index.jsf' ? 'current' : ''}"><h:commandLink action="index" value="Home"/></li>	
+					<li class="#{view == '/cliente/posizioneAttuale.jsf' ? 'current' : ''}"><h:commandLink action="posizioneAttuale" value="Posizione Attuale"/></li>	
+					<li class="#{view == '/cliente/configurazione.jsf' ? 'current' : ''}"><h:commandLink action="configurazione" value="Configurazione"/></li>	
+				</ul>
+			</nav>
+		</h:form>
+
+		<h:form id="logoutForm" >
+			<p:button href="/logoutCliente" value="Logout"/>
+		</h:form>
+	</ui:composition>
+</body>
+</html>
