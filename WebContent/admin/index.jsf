@@ -17,6 +17,7 @@
 	  			<ui:include src="/admin/sidebar_admin.jsf" />
 	  		</ui:define>		
 			<ui:define name="content">
+				<p>Bentornato</p>
 				<h:outputText id="out" value="#{securityBacking.welcome}"/>
 				<h:form>
 					<h:commandButton action="#{securityBacking.logout}" value="Logout" />

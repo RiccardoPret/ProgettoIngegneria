@@ -44,5 +44,4 @@ public class Query {
 	public String getQuery(String queryName){
 		return queries.get(queryName);
 	}
-	
 }

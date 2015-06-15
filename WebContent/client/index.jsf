@@ -19,7 +19,8 @@
 	  		</ui:define>
 	  		
 			<ui:define name="content">
-				<p>Bentornato utente</p>
+				<p>Bentornato</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
 				<h:form>
 					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
 				</h:form>

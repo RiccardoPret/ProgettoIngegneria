@@ -19,7 +19,7 @@ public class SecurityBacking {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		
-		return "Buongiorno "+request.getUserPrincipal().getName();
+		return ""+request.getUserPrincipal().getName();
 	}
 	
 	public String logout() {
@@ -33,5 +33,9 @@ public class SecurityBacking {
 			e.printStackTrace();
 		}
 		return "/client/index.jsf?faces-redirect=true";
+	}
+	
+	public String getQuery(){
+		return Query.getInstance().getQuery("");
 	}
 }
