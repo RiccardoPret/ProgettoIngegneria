@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition>
+		<h1 id="logo"><a href="#">STRIPED</a></h1>
+
+		<h:form>
+		<ui:param name="view" value="#{facesContext.viewRoot.viewId}" />
+			<nav id="nav">
+				<ul>
+					<li class="#{view == '/index.jsf' ? 'current' : ''}"><h:commandLink action="index" value="Home"/></li>	
+					<li class="#{view == '/posizioneAttuale.jsf' ? 'current' : ''}"><h:commandLink action="posizioneAttuale" value="Posizione Attuale"/></li>	
+					<li class="#{view == '/configurazione.jsf' ? 'current' : ''}"><h:commandLink action="configurazione" value="Configurazione"/></li>	
+				</ul>
+			</nav>
+		</h:form>
+
+		<h:form id="logoutForm">
+			<p:commandButton value="Logout" actionListener="#{User.logout}" ajax="false" />
+		</h:form>
+	</ui:composition>
+</body>
+</html>

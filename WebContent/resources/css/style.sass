@@ -1,0 +1,470 @@
+$maincolor: #CC0000
+$background: #eaeaea
+
+html
+  height: 100%
+
+body
+  height: 100%
+  background: $maincolor none repeat scroll 0 0
+  color: #000000
+  font-family: "Source Sans Pro",sans-serif
+  font-size: 12pt
+  font-weight: 300
+  margin: 0
+  padding: 0
+
+h1, h2, h3
+  margin: 0
+  padding: 0
+
+p, ol, ul
+  margin-top: 0
+
+ol, ul
+  list-style: outside none none
+  padding: 0
+
+p
+  line-height: 180%
+
+a
+  color: $maincolor
+  &:hover
+    text-decoration: none
+
+.container
+  margin: 0 auto
+  overflow: hidden
+  width: 1000px
+
+.image
+  display: inline-block
+  img
+    display: block
+    width: 100%
+
+.image-full
+  display: block
+  margin: 0 0 2em
+  width: 100%
+
+.image-left
+  float: left
+  margin: 0 2em 2em 0
+
+.image-centered
+  display: block
+  margin: 0 0 2em
+  img
+    margin: 0 auto
+    width: auto
+
+ul
+  &.style1
+  &.contact
+    list-style: outside none none
+    margin: 0
+    padding: 2em 0 0
+    li
+      display: inline-block
+      font-size: 1em
+      padding: 0 0.3em
+      span
+        display: none
+        margin: 0
+        padding: 0
+      a
+        color: #fff
+        &::before
+          background: #3f3f3f none repeat scroll 0 0
+          border-radius: 20px
+          color: #ffffff
+          display: inline-block
+          height: 40px
+          line-height: 40px
+          text-align: center
+          width: 40px
+        &.icon-twitter::before
+          background: #2daae4 none repeat scroll 0 0
+        &.icon-facebook::before
+          background: #39599f none repeat scroll 0 0
+        &.icon-dribbble::before
+          background: #c4376b none repeat scroll 0 0
+        &.icon-tumblr::before
+          background: #31516a none repeat scroll 0 0
+        &.icon-rss::before
+          background: #f2600b none repeat scroll 0 0
+
+.button
+  color: #fff
+  display: inline-block
+  font-size: 0.9em
+  font-weight: 400
+  letter-spacing: 0.2em
+  padding: 1em 3em 1em 2em
+  text-decoration: none
+  text-transform: uppercase
+  &::before
+    background: #ffc31f none repeat scroll 0 0
+    border-radius: 20px
+    color: #272925
+    display: inline-block
+    height: 40px
+    line-height: 40px
+    margin-right: 1em
+    text-align: center
+    width: 40px
+
+.box1, .box2, .box3
+  width: 235px
+
+.box4
+  width: 235px
+  float: right
+
+.boxA, .boxB, .boxC
+  width: 300px
+
+.boxA, .boxB
+  float: left
+  margin-right: 50px
+
+.boxC
+  float: right
+
+.tbox1, .tbox2
+  width: 575px
+
+.tbox1
+  float: left
+
+.tbox2
+  float: right
+
+#wrapper
+  background: $background none repeat scroll 0 0
+  margin-bottom: 5px
+
+#header-wrapper
+  background: rgba(0, 0, 0, 0) url("/immobiliare/javax.faces.resource/images/banner.jpg.jsf") no-repeat scroll center center / cover
+  border-top: 10px solid $maincolor
+
+#header
+  padding: 5em 0
+  position: relative
+
+#logo
+  h1
+    background: $maincolor none repeat scroll 0 0
+    border-radius: 0 0 5px 5px
+    left: 0
+    padding: 1em
+    position: absolute
+    top: 0
+  a
+    color: #fff
+    text-decoration: none
+
+#menu
+  position: absolute
+  right: 0
+  top: 4em
+  ul
+    display: inline-block
+  li
+    display: block
+    float: left
+    text-align: center
+    a, span
+      color: #fff
+      font-size: 0.9em
+      font-weight: 600
+      letter-spacing: 1px
+      padding: 0.9em
+      text-decoration: none
+      text-transform: uppercase
+    &:hover a
+      background: $maincolor none repeat scroll 0 0
+      border-radius: 5px
+    &.active
+      a, span
+        background: $maincolor none repeat scroll 0 0
+        border-radius: 5px
+  .current_page_item a, .icon
+
+#banner
+  padding: 10em 0
+  span
+    color: #fff
+    display: block
+    font-size: 2.5em
+    font-weight: 700
+    text-align: center
+    text-transform: uppercase
+
+#page
+  padding-bottom: 5em
+  h2
+    font-size: 1.5em
+    padding-bottom: 1.5em
+    text-transform: uppercase
+
+#content, #sidebar, #footer
+
+#copyright
+  overflow: hidden
+  padding: 5em 0
+  p
+    color: rgba(255, 255, 255, 0.6)
+    font-size: 0.8em
+    letter-spacing: 0.2em
+    text-align: center
+    text-transform: uppercase
+  a
+    color: rgba(255, 255, 255, 0.9)
+    text-decoration: none
+
+.title
+  margin-bottom: 3em
+  text-transform: uppercase
+  h2
+    font-size: 2.8em
+    font-weight: 700
+  .byline
+    color: #6f6f6f
+    font-size: 1.1em
+
+#staff
+  padding: 5em 0
+  text-align: center
+
+#welcome
+  border-top: 1px solid rgba(0, 0, 0, 0.1)
+  padding: 5em 0
+  text-align: center
+
+ul
+  &.style3
+    color: #6c6c6c
+    list-style: outside none none
+    margin: 0
+    overflow: hidden
+    padding: 0
+    li
+      margin: 0 0 1em
+      padding: 1.6em 0 0
+    p
+      margin: 0
+    a
+      color: #2d2d2d
+      display: block
+      text-decoration: none
+      &:hover
+        text-decoration: underline
+    h3
+      font-size: 1em
+      font-weight: 300
+      padding: 1em 0 5px
+      text-transform: uppercase
+    .first
+      background: rgba(0, 0, 0, 0) none repeat scroll 0 0
+      padding-top: 0
+    .date
+      background: #262626 none repeat scroll 0 0
+      border-radius: 5px
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.1)
+      color: #fff
+      float: left
+      font-size: 1em
+      font-weight: 400
+      height: 70px
+      line-height: normal
+      margin: 0.5em 1.5em 0 0.5em
+      padding: 20px 0 0
+      position: relative
+      text-align: center
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2)
+      text-transform: uppercase
+      width: 80px
+      &::after
+        border-radius: 6px
+        content: ""
+        display: block
+        height: 100%
+        left: 0
+        position: absolute
+        top: 0
+        width: 100%
+      b
+        color: #ffffff
+        display: block
+        font-size: 1.8em
+        font-weight: 700
+        margin: -5px 0 0
+        padding: 0
+      a
+        color: #ffffff !important
+        &:hover
+          text-decoration: none
+  &.style4
+    list-style: outside none none
+    margin: 0
+    padding: 0
+    li
+      border-top: 1px solid rgba(0, 0, 0, 0.1)
+      line-height: 3em
+    a
+      color: #2d2d2d
+    .first
+      border-top: medium none
+      padding-top: 0
+
+#typeMenu
+
+.mpTypeButton
+  background-color: $maincolor
+  border-radius: 20px
+  color: white
+  height: 200px
+  width: 300px
+
+.clear
+  clear: both
+
+.mpTypeButtonText
+  line-height: 200px
+
+#login
+  position: absolute
+  right: 0
+  top: 1em
+  ul
+    display: inline-block
+  li
+    display: block
+    float: left
+    text-align: center
+  td
+    color: #fff
+    font-size: 0.9em
+    font-weight: 600
+    text-decoration: none
+
+.redButton
+  background-color: $maincolor
+  border-radius: 5px
+  color: #fff
+  padding: 5px 10px
+  text-decoration: none
+
+.loginTextInput
+  background-color: #fff
+  border: medium none
+  border-radius: 2px
+  height: 20px
+  width: 120px
+
+.emptyRow
+  width: 1.5em
+
+.table_entry
+  color: #fff
+  font-size: 0.9em
+  font-weight: 600
+  margin-right: 15px
+  text-decoration: none
+  width: 200px
+
+.table_entry_user
+  @extend .table_entry
+  width: 150px
+
+.table_entry_offerte
+  @extend .table_entry
+  width: 120px
+
+.table_row
+  background-color: #444
+  border-bottom: 2px solid $background
+  height: 50px
+
+.table > div
+  &:first-child
+    border-radius: 15px 15px 0 0
+    border-top: 2px solid $maincolor
+  &:last-child
+    border-bottom: 2px solid $maincolor
+    border-radius: 0 0 15px 15px
+
+.table_row td
+  text-align: center
+
+.table_row_head
+  height: 20px
+  padding: 5px
+  position: relative
+
+.table_column_head
+  color: #222
+  float: left
+  margin-right: 27px
+  text-align: center
+
+.table_column_head_user
+  @extend .table_column_head
+  margin-right: 31px 
+
+.table_column_head_offerte
+  @extend .table_column_head
+  margin-right: 44px
+
+
+.immobile_table_details
+  border-collapse: collapse
+  margin: auto
+  width: 70%
+  margin-bottom: 40px
+  td
+    color: white
+    padding: 10px
+  th
+    border-bottom: 1px solid black
+
+#table_details_title_column
+  color: $maincolor
+  text-align: right
+  width: 30%
+
+#table_details_detail_column
+  color: #222
+  padding-left: 30px
+  text-align: left
+  width: 70%
+
+#table_details_header
+  padding: 10px
+
+#new_offer
+  margin-top: 80px
+
+#new_offer_submit_button
+  background-color: $maincolor
+  border-radius: 5px
+  color: white
+  height: 150px
+  line-height: 150px
+  margin: 20px auto auto
+  text-align: center
+  vertical-align: middle
+  width: 200px
+  
+.table_offerte
+  padding-top: 20px
+
+.offerte
+  border-bottom: 1px solid black
+  color: $maincolor
+  font-size: 2.5em
+  font-weight: 600
+  padding: 20px

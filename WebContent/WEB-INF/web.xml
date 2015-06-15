@@ -46,16 +46,6 @@
 	</security-constraint>
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Staff Area</web-resource-name>
-			<url-pattern>/staff/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>admin</role-name>
-			<role-name>staff</role-name>
-		</auth-constraint>
-	</security-constraint>
-	<security-constraint>
-		<web-resource-collection>
 			<web-resource-name>Client Area</web-resource-name>
 			<url-pattern>/client/*</url-pattern>
 		</web-resource-collection>
@@ -67,10 +57,6 @@
 	<security-role>
 		<description>Amministratori di sistema</description>
 		<role-name>admin</role-name>
-	</security-role>
-	<security-role>
-		<description>Personale tecnico</description>
-		<role-name>staff</role-name>
 	</security-role>
 	<security-role>
 		<description>Possessori del dispositivo</description>

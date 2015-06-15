@@ -17,8 +17,8 @@
 		<input value="Login" type="submit" />
 	</form>
 	<h:form>
-		<p><h:commandButton value="Admin area" action="/admin/index.jsf"/></p>
-		<a href="/admin/index.jsf">Admin</a>
+		<p><h:commandButton value="Admin area" action="/admin/index.jsf?faces-redirect=true
+"/></p>
 	</h:form>
 	
 </body>
