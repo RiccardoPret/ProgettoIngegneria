@@ -28,6 +28,7 @@
 					<h:outputText value="&lt;iframe width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/khmudXrDemU?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8"
 escape="false" style="height:0px;width:0px"/> 
 				</div>
+				
 			</ui:define>
 		</ui:composition>	
 	</h:body>
