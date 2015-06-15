@@ -7,19 +7,28 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<head>
-<title>IGNORED</title>
-</head>
-<body>
-	<form id="loginForm" method="post" action="j_security_check">
-		<input name="j_username" type="text" placeholder="Username" /> 
-		<input name="j_password" type="password" placeholder="Password" /> 
-		<input value="Login" type="submit" />
-	</form>
-	<h:form>
-		<p><h:commandButton value="Admin area" action="/admin/index.jsf?faces-redirect=true
-"/></p>
-	</h:form>
-	
-</body>
+	<head>
+		<title>IGNORED</title>
+	</head>
+	<body>
+		<ui:composition template="/templates/layout.jsf">
+			<ui:define name="windowTitle">
+	    		#{msgs.AgencyHome}
+	  		</ui:define>
+	  		<ui:define name="sidebar">
+	  			<ui:include src="/sidebar.jsf" />
+	  		</ui:define>
+
+			<ui:define name="content">
+				<form id="loginForm" method="post" action="j_security_check">
+					<input name="j_username" type="text" placeholder="Username" /> 
+					<input name="j_password" type="password" placeholder="Password" /> 
+					<input value="Login" type="submit" />
+				</form>
+				<h:form>
+					<p><h:commandButton value="Admin area" action="/admin/index.jsf?faces-redirect=true"/></p>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
 </html>

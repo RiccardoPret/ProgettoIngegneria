@@ -2,12 +2,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html">
-<h:head>Admin Page</h:head>
-<h:body>
-	<h:outputText id="out" value="#{securityBacking.welcome}"/>
-	<h:form>
-		<h:commandButton action="#{securityBacking.logout}" value="Logout" />
-	</h:form>
-</h:body>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	<h:head>Admin Page</h:head>
+	<h:body>
+		<ui:composition template="/templates/layout.jsf">
+			<ui:define name="windowTitle">
+	   			 Home admin
+	  		</ui:define>
+	  		<ui:define name="sidebar">
+	  			<ui:include src="/admin/sidebar_admin.jsf" />
+	  		</ui:define>		
+			<ui:define name="content">
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<h:form>
+					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
 </html>
