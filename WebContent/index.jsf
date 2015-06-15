@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<form id="loginForm" method="post" action="j_security_check">
+		<input name="j_username" type="text" placeholder="Username" /> 
+		<input name="j_password" type="password" placeholder="Password" /> 
+		<input value="Login" type="submit" />
+	</form>
+	<h:form>
+		<p><h:commandButton value="Admin area" action="/admin/index.jsf"/></p>
+		<a href="/admin/index.jsf">Admin</a>
+	</h:form>
+	
+</body>
+</html>
