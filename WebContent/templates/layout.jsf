@@ -9,6 +9,8 @@
 
 	<h:head>
 		<title><ui:insert name="windowTitle" /></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<h:outputStylesheet library="css" name="main.css" />
 	</h:head>
 
@@ -16,7 +18,9 @@
 		<!-- Content -->
 			<div id="content">
 				<div class="inner">
+					<article class="box post post-excerpt">
 						<ui:insert name="content"/>
+					</article>
 				</div>
 			</div>
 		<!-- SideBar -->
