@@ -10,24 +10,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseDriver {
+	private static DatabaseDriver instance;
+	private Connection connection;
+	
 	private String dBUser = "eiwpodpcjchayi";
 	private String dBPassword = "Ij5zl1Sj6EVkm0xcC1qKgj8NsP";
 	private String dBUrl = "jdbc:postgresql://ec2-54-247-79-142.eu-west-1.compute.amazonaws.com/de6rbt0qvpr0u2?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-	private String dBDriver;
+	private String dBDriver = "org.postgresql.Driver";
 
-	private Connection connection;
-
-	public DatabaseDriver(String driverName) {
-		this.dBDriver = driverName;
+	private DatabaseDriver(){
+		super();
+	}
+	
+	public static DatabaseDriver getInstance(){
+		if(instance==null){
+			instance=new DatabaseDriver();
+		}
+		return instance;
 	}
 
+	private void checkInstantiation(){
+		if(instance==null){
+			System.out.println("Non aprire connessioni senza prima avere istanziato l'oggetto!");
+			instance=new DatabaseDriver();
+		}
+	}
+	
 	public void openConnection() {
+		checkInstantiation();
 		try {
 			Driver myDriver = (Driver) Class.forName(dBDriver).newInstance();
 			DriverManager.registerDriver(myDriver);
 			// creazione della connessione
 			connection = DriverManager.getConnection(dBUrl, dBUser, dBPassword);
-
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver non trovato");
 			e.printStackTrace();
@@ -53,6 +68,7 @@ public class DatabaseDriver {
 		PreparedStatement stmt = null;
 		String sql = "select username from user_list where user_list.username=? and user_list.password=?";
 
+		checkInstantiation();
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
@@ -77,6 +93,7 @@ public class DatabaseDriver {
 		List<String> roleList = new ArrayList<String>();
 		String sql = "select user_role.role from user_list, user_role where user_list.username=user_role.username and user_list.username=?";
 
+		checkInstantiation();
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);

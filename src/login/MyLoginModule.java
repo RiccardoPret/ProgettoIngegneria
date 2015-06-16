@@ -80,10 +80,9 @@ public class MyLoginModule implements LoginModule {
 	}
 
 	private boolean isValidUser() {
-		String dBDriver = "org.postgresql.Driver";
 		boolean userExists;
 
-		DatabaseDriver driver = new DatabaseDriver(dBDriver);
+		DatabaseDriver driver = DatabaseDriver.getInstance();
 		driver.openConnection();
 		userExists = driver.userExists(this.username, this.password);
 		driver.closeConnection();
@@ -119,10 +118,9 @@ public class MyLoginModule implements LoginModule {
 	}
 
 	private List<String> getRoles() {
-		String dBDriver = "org.postgresql.Driver";
 		List<String> roleList = new ArrayList<String>();
 
-		DatabaseDriver driver = new DatabaseDriver(dBDriver);
+		DatabaseDriver driver = DatabaseDriver.getInstance();
 		driver.openConnection();
 		roleList = driver.getRoles(this.username);
 		driver.closeConnection();

@@ -1,30 +1,37 @@
 package controller;
 
+import java.io.InputStream;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean
 @ViewScoped
 public class SecurityBacking {
-	
-	public String invalidateSession(){
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+	public String invalidateSession() {
+		FacesContext.getCurrentInstance().getExternalContext()
+				.invalidateSession();
 		return "/client/index.jsf?faces-redirect=true";
 	}
-	
-	public String getWelcome(){
+
+	public String getWelcome() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		
-		return ""+request.getUserPrincipal().getName();
+		HttpServletRequest request = (HttpServletRequest) context
+				.getExternalContext().getRequest();
+
+		return "" + request.getUserPrincipal().getName();
 	}
-	
+
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		HttpServletRequest request = (HttpServletRequest) context
+				.getExternalContext().getRequest();
 
 		try {
 			request.logout();
@@ -34,8 +41,16 @@ public class SecurityBacking {
 		}
 		return "/client/index.jsf?faces-redirect=true";
 	}
-	
+
 	public String getQuery(){
-		return Query.getInstance().getQuery("");
+		Query.getInstance();
+		Query.getInstance();
+		return "";
+		/*ExternalContext ext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		String path = ext.getRequestContextPath();
+		//path += path.endsWith("/") ? "foo.xsd" : "/foo.xsd";
+		String url = ext.encodeResourceURL(path);
+		return "Query: "+Query.getInstance().getQuery("query_checkUser");*/
 	}
 }

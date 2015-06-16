@@ -68,13 +68,16 @@
 		<realm-name>Admin</realm-name>
 		<form-login-config>
 			<form-login-page>/index.jsf</form-login-page>
-			<form-error-page>/login-failed.jsf</form-error-page>
+			<form-error-page>/error-login_failed.jsf</form-error-page>
 		</form-login-config>
 	</login-config>
 
 	<error-page>
 		<error-code>403</error-code>
-		<location>/access-denied.jsf</location>
+		<location>/error-access_denied.jsf</location>
 	</error-page>
-
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error-not_found.jsf</location>
+	</error-page>
 </web-app>

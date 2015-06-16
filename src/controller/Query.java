@@ -5,6 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class Query {
@@ -17,6 +20,22 @@ public class Query {
 	private Query(){
 		queries= new HashMap<String, String>();
 		BufferedReader in = null;
+		defaultPath=this.getClass().getResource("query.txt").getPath();
+		
+		Path path=null;
+		try {
+			//String s=this.getClass().getName();
+			//s=s.substring(s.lastIndexOf("."));
+			//s=s.substring(beginIndex)
+			//s+=".class";
+			//System.out.println(s);
+			path = Paths.get(this.getClass().getResource("Query.class").toURI());
+		} catch (URISyntaxException e2) {
+			e2.printStackTrace();
+		}
+		System.out.println(path.getRoot());
+		System.out.println(path);
+		System.out.println(path.getParent().getParent().getParent().getFileName());
 		try {
 			in = new BufferedReader(new FileReader(defaultPath));
 			String line = "";
@@ -38,6 +57,7 @@ public class Query {
 		if(instance==null){
 			instance=new Query();
 		}
+		//System.out.println(instance.getQuery("query_checkUser"));
 		return instance;
 	}
 	
