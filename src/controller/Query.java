@@ -36,6 +36,15 @@ public class Query {
 		}
 	}
 
+	public static Query getInstance() {
+		if (instance == null) {
+			instance = new Query();
+		}
+		System.out.println(instance.getQuery("query_checkUser"));
+		return instance;
+	}
+
+
 	private String getClassName() {
 		String s = this.getClass().getName();
 
@@ -58,14 +67,7 @@ public class Query {
 		return path.toString()+"/reserved/"+this.queryFile;
 	}
 
-	public static Query getInstance() {
-		if (instance == null) {
-			instance = new Query();
-		}
-		System.out.println(instance.getQuery("query_checkUser"));
-		return instance;
-	}
-
+	
 	public String getQuery(String queryName) {
 		return queries.get(queryName);
 	}

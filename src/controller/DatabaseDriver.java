@@ -66,7 +66,7 @@ public class DatabaseDriver {
 	public boolean userExists(String username, char[] password) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		String sql = "select username from user_list where user_list.username=? and user_list.password=?";
+		String sql = Query.getInstance().getQuery("query_checkUser");
 
 		checkInstantiation();
 		try {
@@ -91,7 +91,7 @@ public class DatabaseDriver {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		List<String> roleList = new ArrayList<String>();
-		String sql = "select user_role.role from user_list, user_role where user_list.username=user_role.username and user_list.username=?";
+		String sql = Query.getInstance().getQuery("query_role");
 
 		checkInstantiation();
 		try {
