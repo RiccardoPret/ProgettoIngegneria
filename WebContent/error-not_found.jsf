@@ -7,14 +7,27 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<head>
-<title>La risorsa richiesta non e' disponibile</title>
-</head>
-<body>
-	<h:form>
-		<p>Risorsa non trovata</p>
-		<h:commandButton action="#{securityBacking.invalidateSession}" value="Torna alla home" />
-	</h:form>
-	
-</body>
+	<head>
+		<title>IGNORED</title>
+	</head>
+	<body>
+		<ui:composition template="/templates/layout.jsf">
+			<ui:define name="windowTitle">
+	    		#{msgs.name} | risorsa non trovata
+	  		</ui:define>
+	  		<ui:define name="sidebar">
+	  			<ui:include src="/sidebar.jsf" />
+	  		</ui:define>
+
+			<ui:define name="content">		
+				<h:form>
+					<p>risorsa non trovata</p>
+					<h:commandButton action="#{securityBacking.invalidateSession}" value="Torna alla home" />
+					<h:graphicImage library="images" name="giphy.gif" />
+					<h:outputText value="&lt;iframe width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/U1ei5rwO7ZI?start=38&amp;autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8"
+escape="false" style="height:0px;width:0px"/> 
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
 </html>

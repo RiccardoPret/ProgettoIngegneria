@@ -7,12 +7,23 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<head>
-<title>Login fallito</title>
-</head>
-<body>
-	<h:form>
-		<p>Utente o password inesistenti</p>
-	</h:form>
-</body>
+	<head>
+		<title>IGNORED</title>
+	</head>
+	<body>
+		<ui:composition template="/templates/layout.jsf">
+			<ui:define name="windowTitle">
+	    		#{msgs.name} | login fallito
+	  		</ui:define>
+	  		<ui:define name="sidebar">
+	  			<ui:include src="/sidebar.jsf" />
+	  		</ui:define>
+
+			<ui:define name="content">		
+				<h:form>
+					<p>utente o password sbagliati</p>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
 </html>
