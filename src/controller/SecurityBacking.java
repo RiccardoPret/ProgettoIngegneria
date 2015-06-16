@@ -42,15 +42,4 @@ public class SecurityBacking {
 		return "/client/index.jsf?faces-redirect=true";
 	}
 
-	public String getQuery(){
-		Query.getInstance();
-		Query.getInstance();
-		return "";
-		/*ExternalContext ext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		String path = ext.getRequestContextPath();
-		//path += path.endsWith("/") ? "foo.xsd" : "/foo.xsd";
-		String url = ext.encodeResourceURL(path);
-		return "Query: "+Query.getInstance().getQuery("query_checkUser");*/
-	}
 }
