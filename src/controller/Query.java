@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,54 +13,60 @@ public class Query {
 
 	private static Query instance;
 	private HashMap<String, String> queries;
-	private String defaultPath="query.txt";
-	private String separator="=>";
-	
+	private String queryFile="query.txt";
+	private String separator = "=>";
+
 	private Query(){
 		queries= new HashMap<String, String>();
 		BufferedReader in = null;
-		defaultPath=this.getClass().getResource("query.txt").getPath();
-		
-		Path path=null;
 		try {
-			//String s=this.getClass().getName();
-			//s=s.substring(s.lastIndexOf("."));
-			//s=s.substring(beginIndex)
-			//s+=".class";
-			//System.out.println(s);
-			path = Paths.get(this.getClass().getResource("Query.class").toURI());
-		} catch (URISyntaxException e2) {
-			e2.printStackTrace();
-		}
-		System.out.println(path.getRoot());
-		System.out.println(path);
-		System.out.println(path.getParent().getParent().getParent().getFileName());
-		try {
-			in = new BufferedReader(new FileReader(defaultPath));
+			in = new BufferedReader(new FileReader(getQueryPath()));
 			String line = "";
 			while ((line = in.readLine()) != null) {
 			    String parts[] = line.split(separator);
 			    queries.put(parts[0], parts[1]);
 			}
 			in.close();
-		} catch (FileNotFoundException e1) {
+		} catch (FileNotFoundException e) {
 			//apertura del file fallita
-			e1.printStackTrace();
+			e.printStackTrace();
 		} catch (IOException e) {
 			//lettura del file o chiusura del file fallita
 			e.printStackTrace();
 		}
 	}
-	
-	public static Query getInstance(){
-		if(instance==null){
-			instance=new Query();
+
+	private String getClassName() {
+		String s = this.getClass().getName();
+
+		s = s.substring(s.lastIndexOf(".") + 1);
+		s += ".class";
+		return s;
+	}
+
+	private String getQueryPath() {
+		Path path = null;
+
+		try {
+			path = Paths.get(this.getClass().getResource(getClassName())
+					.toURI());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
-		//System.out.println(instance.getQuery("query_checkUser"));
+		while (!(path = path.getParent()).getFileName().toString()
+				.equals("WEB-INF"));
+		return path.toString()+"/reserved/"+this.queryFile;
+	}
+
+	public static Query getInstance() {
+		if (instance == null) {
+			instance = new Query();
+		}
+		System.out.println(instance.getQuery("query_checkUser"));
 		return instance;
 	}
-	
-	public String getQuery(String queryName){
+
+	public String getQuery(String queryName) {
 		return queries.get(queryName);
 	}
 }
