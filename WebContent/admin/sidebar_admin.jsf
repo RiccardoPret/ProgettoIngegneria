@@ -23,9 +23,6 @@
 			</nav>
 		</h:form>
 
-		<h:form id="logoutForm" >
-			<p:button href="/logoutCliente" value="Logout"/>
-		</h:form>
 	</ui:composition>
 </body>
 </html>
