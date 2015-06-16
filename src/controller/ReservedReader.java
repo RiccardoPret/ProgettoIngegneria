@@ -32,6 +32,9 @@ public class ReservedReader {
 		mapInstantiate();
 	}
 	
+	/*
+	 * Carica nell'hashmap tutte le coppie chiave valore nel file
+	 */
 	private void mapInstantiate() {
 		map= new HashMap<String, String>();
 		BufferedReader in = null;
@@ -39,7 +42,7 @@ public class ReservedReader {
 			in = new BufferedReader(new FileReader(getReservedPath()));
 			String line = "";
 			while ((line = in.readLine()) != null) {
-			    String parts[] = line.split(separator);
+			    String parts[] = line.split(this.separator);
 			    map.put(parts[0], parts[1]);
 			}
 			in.close();
@@ -52,6 +55,9 @@ public class ReservedReader {
 		}
 	}
 
+	/*
+	 * Restituisce il nome della classe senza il package completo e con il .class
+	 */
 	private String getObjectClassName() {
 		String s = this.startingPointClass.getClass().getName();
 
@@ -60,22 +66,26 @@ public class ReservedReader {
 		return s;
 	}
 	
+	/*
+	 * Da il percorso completo del file riservato da dove leggere i dati
+	 */
+	
 	private String getReservedPath() {
 		Path path = null;
 
 		try {
-			System.out.println(startingPointClass.getClass().getResource(getObjectClassName()));
 			path = Paths.get(startingPointClass.getClass().getResource(getObjectClassName()).toURI());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+		//Vado indietro fino alla cartella WEB-INF, la quale contiene la cartella reserved
 		while (!(path = path.getParent()).getFileName().toString()
 				.equals("WEB-INF"));
-		System.out.println(path.toString()+"/reserved/"+this.fileName);
+		
 		return path.toString()+"/reserved/"+this.fileName;
 	}
 
-	public String getValue(String key){
+	protected String getValue(String key){
 		return map.get(key);
 	}
 }
