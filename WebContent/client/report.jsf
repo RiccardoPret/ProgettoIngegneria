@@ -20,18 +20,20 @@
 	  		
 			<ui:define name="content">
 				<p>Bentornato</p>
-				<h:outputText id="welcome" value="#{securityBacking.welcome}"/>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
 				
-				<p>Id dispositivo:</p>
-				<h:outputText id="dispositivo" value="#{clientBean.idDispositivo}"/>
+				<p>Mappa delle posizioni di oggi:</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				
+				<p>A sinistra selettore degli ultimi 10 giorni:</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				
+				<p>A destra le ultime 12 foto scattate (4 file da 3 di thumbnail)</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				
 				<h:form>
 					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
 				</h:form>
-					<div style="height:0px;width=0px">
-
-					<h:outputText value="&lt;iframe width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/khmudXrDemU?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8"
-escape="false" style="height:0px;width:0px"/> 
-				</div>
 				
 			</ui:define>
 		</ui:composition>	

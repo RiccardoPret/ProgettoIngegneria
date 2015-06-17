@@ -17,6 +17,7 @@ public class ReservedReader {
 	private String separator;
 
 	public ReservedReader(Object obj, String fileName) {
+		//TODO evitare il primo parametro e far riferimento sempre a questo file
 		this.startingPointClass=obj;
 		this.fileName=fileName;
 		this.separator = "=>";

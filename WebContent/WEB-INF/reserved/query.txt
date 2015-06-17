@@ -1,2 +1,2 @@
-query_checkUser=>select username from user_list where user_list.username=? and user_list.password=?
-query_role=>select user_role.role from user_list, user_role where user_list.username=user_role.username and user_list.username=?
+query_checkUser=>select username from UserList where UserList.username=? and UserList.password=?
+query_role=>select UserGroup.ruolo from UserGroup where UserGroup.username=?

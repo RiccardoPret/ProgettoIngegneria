@@ -8,31 +8,29 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-	<h:head>Client Page</h:head>
+	<h:head>Il tuo profilo</h:head>
 	<h:body>
 		<ui:composition template="/templates/layout.jsf">
 			<ui:define name="windowTitle">
-	   			 Home cliente
+	   			 Qui sotto vi sono i tuoi dati personali e le possibili personalizzazioni che puoi fare al tuo profilo
 	  		</ui:define>
 	  		<ui:define name="sidebar">
 	  			<ui:include src="/client/sidebar_cliente.jsf" />
 	  		</ui:define>
 	  		
 			<ui:define name="content">
-				<p>Bentornato</p>
-				<h:outputText id="welcome" value="#{securityBacking.welcome}"/>
+				<p>Username:</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<p>Dispositivo:</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<p>Email:</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<p>Telefono:</p>
+				<h:outputText id="out" value="#{securityBacking.welcome}"/>
 				
-				<p>Id dispositivo:</p>
-				<h:outputText id="dispositivo" value="#{clientBean.idDispositivo}"/>
 				<h:form>
 					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
-				</h:form>
-					<div style="height:0px;width=0px">
-
-					<h:outputText value="&lt;iframe width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/khmudXrDemU?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8"
-escape="false" style="height:0px;width:0px"/> 
-				</div>
-				
+				</h:form>				
 			</ui:define>
 		</ui:composition>	
 	</h:body>

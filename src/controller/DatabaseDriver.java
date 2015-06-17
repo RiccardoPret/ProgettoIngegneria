@@ -13,10 +13,9 @@ public class DatabaseDriver {
 	private static DatabaseDriver instance;
 	private Connection connection;
 	
-	private String dBUser = "eiwpodpcjchayi";
-	private String dBPassword = "Ij5zl1Sj6EVkm0xcC1qKgj8NsP";
-	private String dBUrl = "jdbc:postgresql://ec2-54-247-79-142.eu-west-1.compute.amazonaws.com/de6rbt0qvpr0u2?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-	private String dBDriver = "org.postgresql.Driver";
+	private static ReservedReader DBCredential;	//Evito le credenziali hard-coded. Esse sono in un file inaccessibile
+	private static String dbFile="credential_DBMS.txt";
+	private static String separator="=>";
 
 	private DatabaseDriver(){
 		super();
@@ -25,6 +24,12 @@ public class DatabaseDriver {
 	public static DatabaseDriver getInstance(){
 		if(instance==null){
 			instance=new DatabaseDriver();
+			DBCredential= new ReservedReader(instance, dbFile, separator);
+			
+			System.out.println(DBCredential.getValue("driver"));
+			System.out.println(DBCredential.getValue("url"));
+			System.out.println(DBCredential.getValue("username"));
+			System.out.println(DBCredential.getValue("password"));
 		}
 		return instance;
 	}
@@ -39,10 +44,10 @@ public class DatabaseDriver {
 	public void openConnection() {
 		checkInstantiation();
 		try {
-			Driver myDriver = (Driver) Class.forName(dBDriver).newInstance();
+			Driver myDriver = (Driver) Class.forName(DBCredential.getValue("driver")).newInstance();
 			DriverManager.registerDriver(myDriver);
 			// creazione della connessione
-			connection = DriverManager.getConnection(dBUrl, dBUser, dBPassword);
+			connection = DriverManager.getConnection(DBCredential.getValue("url"), DBCredential.getValue("username"), DBCredential.getValue("password"));
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver non trovato");
 			e.printStackTrace();
@@ -53,7 +58,24 @@ public class DatabaseDriver {
 			e.printStackTrace();
 		}
 	}
+	
+	public ResultSet getDispositivo(String username){
+		PreparedStatement stmt = null;
+		String sql="Select D.id_dispositivo, D.modello, D.attivo from Utente U, Dispositivo D where U.dispositivo=D.id_dispositivo AND U.username=?";
 
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, username);
+			
+			return stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void closeConnection() {
 		try {
 			connection.close();
@@ -101,7 +123,7 @@ public class DatabaseDriver {
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				roleList.add(rs.getString("role"));
+				roleList.add(rs.getString("ruolo"));
 			}
 		} catch (Exception e) {
 			// LOGGER.error("Error when loading user from the database " + e);

@@ -1,18 +1,17 @@
 package controller;
 
-import java.io.InputStream;
+import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean
-@ViewScoped
-public class SecurityBacking {
+@SessionScoped
+public class SecurityBacking implements Serializable{
+
+	private String username;
 
 	public String invalidateSession() {
 		FacesContext.getCurrentInstance().getExternalContext()
@@ -24,8 +23,8 @@ public class SecurityBacking {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context
 				.getExternalContext().getRequest();
-
-		return "" + request.getUserPrincipal().getName();
+		this.username = request.getUserPrincipal().getName();
+		return username;
 	}
 
 	public String logout() {
@@ -33,12 +32,7 @@ public class SecurityBacking {
 		HttpServletRequest request = (HttpServletRequest) context
 				.getExternalContext().getRequest();
 
-		try {
-			request.logout();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		request.getSession().invalidate();
 		return "/client/index.jsf?faces-redirect=true";
 	}
 

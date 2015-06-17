@@ -75,7 +75,7 @@ public class MyLoginModule implements LoginModule {
 		} catch (UnsupportedCallbackException e) {
 			e.printStackTrace();
 		}
-
+		//TODO settare a true il boolean del dispositivo che indica se è attivo
 		return false;
 	}
 

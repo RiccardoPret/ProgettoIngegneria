@@ -1,0 +1,86 @@
+package controller;
+
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+
+@ManagedBean
+@SessionScoped
+public class ClientBean implements Serializable {
+
+	@ManagedProperty(value="#{securityBacking}")
+	private SecurityBacking securityBacking;
+	
+	private ClientDataSource ds;
+	
+	private Dispositivo dispositivo;
+	private String username = "";
+	private String password = "";
+	private String email = "";
+	private String telefono = "";
+
+	
+	public ClientBean() {
+		this.ds = new ClientDataSource();
+	}
+	
+	@PostConstruct
+	public void init(){
+		//Prendo lo username
+		this.username=this.securityBacking.getWelcome();
+
+		//Prendo su il resto dell'utente
+		this.dispositivo = ds.getDispositivoFromUser(securityBacking.getWelcome());
+		/*this.password=ds.getPassword(this.username);
+		this.dispositivo=ds.getDispositivoFromUser(this.username);
+		this.email=ds.getEmail(this.username);
+		this.telefono=ds.getTelefono(this.username);*/
+	}
+	
+	public void setSecurityBacking(SecurityBacking s){
+		this.securityBacking=s;
+	}
+	
+	public SecurityBacking getSecurityBacking(){
+		return this.securityBacking;
+	}
+
+	//Valori non modificabili
+	public String getIdDispositivo() {
+		return this.dispositivo.getId().toString();
+	}
+	
+	public String getModelloDispositivo(){
+		return this.dispositivo.getModello();
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	//Valori modificabili
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+		ds.updateEmail(this.dispositivo, email);
+	}
+
+	public String getTelefono() {
+		return this.telefono;
+	}
+
+	public void setTelefono(String tel) {
+		this.telefono = tel;
+		ds.updateTelefono(this.dispositivo, tel);
+	}
+}

@@ -17,7 +17,7 @@ public class Query {
 	public static Query getInstance() {
 		if (instance == null) {
 			instance = new Query();
-			qReader= new ReservedReader(Query.instance, queryFile, separator);
+			qReader= new ReservedReader(instance, queryFile, separator);
 		}
 		return instance;
 	}
