@@ -18,7 +18,6 @@ public class ClientBean implements Serializable {
 	
 	private Dispositivo dispositivo;
 	private String username = "";
-	private String password = "";
 	private String email = "";
 	private String telefono = "";
 
@@ -33,11 +32,9 @@ public class ClientBean implements Serializable {
 		this.username=this.securityBacking.getWelcome();
 
 		//Prendo su il resto dell'utente
-		this.dispositivo = ds.getDispositivoFromUser(securityBacking.getWelcome());
-		/*this.password=ds.getPassword(this.username);
 		this.dispositivo=ds.getDispositivoFromUser(this.username);
 		this.email=ds.getEmail(this.username);
-		this.telefono=ds.getTelefono(this.username);*/
+		this.telefono=ds.getTelefono(this.username);
 	}
 	
 	public void setSecurityBacking(SecurityBacking s){
@@ -59,10 +56,6 @@ public class ClientBean implements Serializable {
 
 	public String getUsername() {
 		return this.username;
-	}
-
-	public String getPassword() {
-		return this.password;
 	}
 
 	//Valori modificabili

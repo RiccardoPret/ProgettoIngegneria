@@ -146,16 +146,8 @@ public class ClientDataSource implements Serializable {
 	 * ritorna il dispositivo a partire dall'username
 	 */
 	public Dispositivo getDispositivoFromUser(String username) {
-		Dispositivo device=null;
 		driver.openConnection();
-		ResultSet rs = driver.getDispositivo(username);
-		try {
-			if(rs.next()){
-				device= new Dispositivo(rs.getInt("id_dispositivo"), rs.getString("modello"), rs.getBoolean("attivo"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Dispositivo device= driver.getDispositivo(username);
 		driver.closeConnection();
 		return device;
 	}

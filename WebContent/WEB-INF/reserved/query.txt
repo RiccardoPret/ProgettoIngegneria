@@ -1,2 +1,3 @@
 query_checkUser=>select username from UserList where UserList.username=? and UserList.password=?
 query_role=>select UserGroup.ruolo from UserGroup where UserGroup.username=?
+query_getDevice=>select D.id_dispositivo, D.modello, D.attivo from Utente U, Dispositivo D where U.dispositivo=D.id_dispositivo AND U.username=?

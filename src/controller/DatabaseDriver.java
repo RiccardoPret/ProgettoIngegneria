@@ -12,20 +12,22 @@ import java.util.List;
 public class DatabaseDriver {
 	private static DatabaseDriver instance;
 	private Connection connection;
-	
-	private static ReservedReader DBCredential;	//Evito le credenziali hard-coded. Esse sono in un file inaccessibile
-	private static String dbFile="credential_DBMS.txt";
-	private static String separator="=>";
 
-	private DatabaseDriver(){
+	private static ReservedReader DBCredential; // Evito le credenziali
+												// hard-coded. Esse sono in un
+												// file inaccessibile
+	private static String dbFile = "credential_DBMS.txt";
+	private static String separator = "=>";
+
+	private DatabaseDriver() {
 		super();
 	}
-	
-	public static DatabaseDriver getInstance(){
-		if(instance==null){
-			instance=new DatabaseDriver();
-			DBCredential= new ReservedReader(instance, dbFile, separator);
-			
+
+	public static DatabaseDriver getInstance() {
+		if (instance == null) {
+			instance = new DatabaseDriver();
+			DBCredential = new ReservedReader(instance, dbFile, separator);
+
 			System.out.println(DBCredential.getValue("driver"));
 			System.out.println(DBCredential.getValue("url"));
 			System.out.println(DBCredential.getValue("username"));
@@ -34,20 +36,25 @@ public class DatabaseDriver {
 		return instance;
 	}
 
-	private void checkInstantiation(){
-		if(instance==null){
-			System.out.println("Non aprire connessioni senza prima avere istanziato l'oggetto!");
-			instance=new DatabaseDriver();
+	private void checkInstantiation() {
+		if (instance == null) {
+			System.out
+					.println("Non aprire connessioni senza prima avere istanziato l'oggetto!");
+			instance = new DatabaseDriver();
 		}
 	}
-	
+
 	public void openConnection() {
 		checkInstantiation();
 		try {
-			Driver myDriver = (Driver) Class.forName(DBCredential.getValue("driver")).newInstance();
+			Driver myDriver = (Driver) Class.forName(
+					DBCredential.getValue("driver")).newInstance();
 			DriverManager.registerDriver(myDriver);
 			// creazione della connessione
-			connection = DriverManager.getConnection(DBCredential.getValue("url"), DBCredential.getValue("username"), DBCredential.getValue("password"));
+			connection = DriverManager.getConnection(
+					DBCredential.getValue("url"),
+					DBCredential.getValue("username"),
+					DBCredential.getValue("password"));
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver non trovato");
 			e.printStackTrace();
@@ -58,24 +65,29 @@ public class DatabaseDriver {
 			e.printStackTrace();
 		}
 	}
-	
-	public ResultSet getDispositivo(String username){
+
+	public Dispositivo getDispositivo(String username) {
+		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		String sql="Select D.id_dispositivo, D.modello, D.attivo from Utente U, Dispositivo D where U.dispositivo=D.id_dispositivo AND U.username=?";
+		String sql = Query.getInstance().getQuery("query_getDevice");
 
 		checkInstantiation();
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
-			
-			return stmt.executeQuery();
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				return new Dispositivo(rs.getInt("id_dispositivo"),
+						rs.getString("modello"), rs.getBoolean("attivo"));
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public void closeConnection() {
 		try {
 			connection.close();
