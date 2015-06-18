@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Configurazione;
+import util.Dispositivo;
+import util.User;
+
 /*
  * Classe che si occupa di interfacciare le query disponibili in modo semplice e leggibile
  */
@@ -83,39 +87,8 @@ public class DatabaseDriver {
 				e.printStackTrace();
 		}
 	}
-
-	public void updateProfile(String username, String attributo, String valore) {
-		PreparedStatement stmt = null;
-
-		String sql = getUpdateQuery(attributo);
-		checkInstantiation();
-		try {
-			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, valore);
-			stmt.setString(2, username);
-
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private String getUpdateQuery(String attributo) {
-		String sql = null;
-		switch (attributo) {
-		case "mail":
-			sql = Query.getInstance().getQuery("update_mail");
-			break;
-		case "numTelefono":
-			sql = Query.getInstance().getQuery("update_numTelefono");
-			break;
-		default:
-			System.out.println("Attributo non esistente!!!");
-			break;
-		}
-		return sql;
-	}
-
+	
+/*
 	public String getTelefono(String username) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
@@ -164,7 +137,7 @@ public class DatabaseDriver {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		Dispositivo device = null;
-		String sql = Query.getInstance().getQuery("query_getDevice");
+		String sql = Query.getInstance().getQuery("query_getUserDevice");
 
 		checkInstantiation();
 		try {
@@ -182,7 +155,8 @@ public class DatabaseDriver {
 		}
 		return device;
 	}
-
+*/
+	
 	public boolean userExists(String username, char[] password) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
@@ -241,11 +215,6 @@ public class DatabaseDriver {
 		return roleList;
 	}
 
-	public String getStreamLink(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public Configurazione getConfigurazione(Dispositivo dispositivo) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
@@ -260,13 +229,146 @@ public class DatabaseDriver {
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				setting.setAll(rs.getInt("freq_ril"), rs.getInt("freq_mex"), rs.getInt("limiteVelocita"),
-						rs.getBoolean("messaggi"), rs.getBoolean("mail"));
+				setting.setfPos(rs.getInt("freq_ril"));
+				setting.setfSms(rs.getInt("freq_mex"));
+				setting.setspeedAlarm(rs.getInt("limiteVelocita"));
+				setting.setSmsEnabled(rs.getBoolean("messaggi"));
+				setting.setEmailEnabled(rs.getBoolean("mail"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return setting;
+	}
+
+	public User getUser(String username) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		User user = new User(username);
+		System.out.println(user.getUsername());
+		String sql = Query.getInstance().getQuery("query_getUser");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, username);
+
+			rs = stmt.executeQuery();
+
+			// Se trova la stringa setta la sua roba
+			if (rs.next()) {
+				Dispositivo device = getDispositivoFromId(rs
+						.getInt("dispositivo"));
+
+				user.setDispositivo(device);
+				user.setEmail(rs.getString("mail"));
+				user.setTelefono("numTelefono");
+				user.setVideo(rs.getString("linkStreaming"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	private Dispositivo getDispositivoFromId(int id) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		Dispositivo device = null;
+		String sql = Query.getInstance().getQuery("query_getDevice");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				device = new Dispositivo(id, rs.getString("modello"),
+						rs.getBoolean("attivo"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return device;
+	}
+	/*
+	public void updateUserProfile(User utente) {
+		PreparedStatement stmt = null;
+		String sql = getUpdateQuery(attributo);
+		
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, valore);
+			stmt.setString(2, username);
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String getUpdateQuery(String attributo) {
+		String sql = null;
+		switch (attributo) {
+		case "mail":
+			sql = Query.getInstance().getQuery("update_mail");
+			break;
+		case "numTelefono":
+			sql = Query.getInstance().getQuery("update_numTelefono");
+			break;
+		case "linkStreaming":
+			sql= Query.getInstance().getQuery("update_linkStreaming");
+			break;
+		default:
+			System.out.println("Attributo non esistente!!!");
+			break;
+		}
+		return sql;
+	}
+*/
+	public void updateProfile(User client) {
+		PreparedStatement stmt = null;
+		String sql=Query.getInstance().getQuery("update_profile");
+		
+		checkInstantiation();
+		
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, client.getEmail());
+			stmt.setString(2, client.getTelefono());
+			stmt.setString(3, client.getVideo());
+			
+			stmt.setString(4, client.getUsername());
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateSetting(Configurazione config) {
+		PreparedStatement stmt = null;
+		String sql=Query.getInstance().getQuery("update_setting");
+		
+		checkInstantiation();
+		
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, config.getfPos());
+			stmt.setInt(2, config.getfSms());
+			stmt.setInt(3, config.getspeedAlarm());
+			stmt.setBoolean(4, config.isSmsEnabled());
+			stmt.setBoolean(5, config.isEmailEnabled());
+			
+			stmt.setInt(6, config.getDispositivo().getId());
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

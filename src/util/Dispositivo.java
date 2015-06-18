@@ -1,4 +1,4 @@
-package controller;
+package util;
 
 public class Dispositivo {
 

@@ -1,8 +1,8 @@
 query_checkUser=>select username from UserList where UserList.username=? and UserList.password=?
 query_role=>select UserGroup.ruolo from UserGroup where UserGroup.username=?
-query_getDevice=>select D.id_dispositivo, D.modello, D.attivo from Utente U, Dispositivo D where U.dispositivo=D.id_dispositivo AND U.username=?
-query_getEmail=>select mail from utente where username=?
-query_getTelefono=>select numTelefono from utente where username=?
-update_mail=>update utente set mail=? where username=?
-update_numTelefono=>update utente set numTelefono=? where username=?
+query_getUserDevice=>select D.id_dispositivo, D.modello, D.attivo from Utente U, Dispositivo D where U.dispositivo=D.id_dispositivo AND U.username=?
 query_getConfig=>select * from configurazione where dispositivo=?
+query_getUser=>select * from utente where username=?
+query_getDevice=>select * from dispositivo where id_dispositivo=?
+update_profile=>update utente set mail=?, numTelefono=?, linkStreaming=? where username=?
+update_setting=>update configurazione set freq_ril=?, freq_mex=?, limiteVelocita=?, messaggi=?, mail=? where dispositivo=?

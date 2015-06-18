@@ -7,6 +7,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import util.Configurazione;
+import util.User;
+
 @ManagedBean
 @SessionScoped
 public class ClientBean implements Serializable {
@@ -15,12 +18,7 @@ public class ClientBean implements Serializable {
 	private SecurityBacking securityBacking;
 	
 	private ClientDataSource ds;
-	
-	private Dispositivo dispositivo;
-	private String username = "";
-	private String email = "";
-	private String telefono = "";
-	private String video="";
+	private User client;
 	private Configurazione config;
 	
 	public ClientBean() {
@@ -29,65 +27,31 @@ public class ClientBean implements Serializable {
 	
 	@PostConstruct
 	public void init(){
-		//Prendo lo username
-		this.username=this.securityBacking.getWelcome();
-
-		//Prendo su il resto dell'utente
-		this.dispositivo=ds.getDispositivoFromUser(this.username);
-		this.email=ds.getEmail(this.username);
-		this.telefono=ds.getTelefono(this.username);
-		this.video=ds.getVideo(this.username);
-		this.config=ds.getConfigurazione(this.dispositivo);
+		//Creo l'utente coi valori settati
+		this.client=ds.getUser(this.securityBacking.getWelcome());
+		//Creo la configurazione coi valori settati
+		this.config=ds.getConfigurazione(this.client.getDispositivo());
 	}
 	
+	//Metodo obbligatorio per il ManagedProperty
 	public void setSecurityBacking(SecurityBacking s){
 		this.securityBacking=s;
 	}
 	
+	//Metodo obbligatorio per il ManagedProperty
 	public SecurityBacking getSecurityBacking(){
 		return this.securityBacking;
 	}
 
-	//Valori non modificabili
-	public String getIdDispositivo() {
-		return this.dispositivo.getId().toString();
-	}
-	
-	public String getModelloDispositivo(){
-		return this.dispositivo.getModello();
-	}
-
-	public String getUsername() {
-		return this.username;
-	}
-	
-	public String getVideo() {
-		return video;
-	}
-
-	//Valori modificabili
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-		//aggiorno il db
-		ds.updateEmail(this.username, email);
-	}
-
-	public String getTelefono() {
-		return this.telefono;
-	}
-
-	public void setTelefono(String tel) {
-		this.telefono = tel;
-		//aggiorno il db
-		ds.updateTelefono(this.username, tel);
+	public User getUser(){
+		return this.client;
 	}
 	
 	public Configurazione getConfigurazione(){
 		return this.config;
 	}
 
+	public void updateDb(){
+		ds.updateDbInstance(this.client, this.config);
+	}
 }

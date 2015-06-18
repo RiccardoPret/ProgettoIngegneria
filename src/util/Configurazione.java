@@ -1,4 +1,4 @@
-package controller;
+package util;
 
 public class Configurazione {
 	
@@ -11,6 +11,10 @@ public class Configurazione {
 	
 	public Configurazione(Dispositivo dispositivo){
 		this.dispositivo=dispositivo;
+	}
+	
+	public Dispositivo getDispositivo(){
+		return this.dispositivo;
 	}
 
 	public Integer getfPos() {
@@ -52,7 +56,7 @@ public class Configurazione {
 	public void setspeedAlarm(Integer speed) {
 		this.speedAlarm = speed;
 	}
-
+/*
 	public void setAll(int fPos, int fSms, int speed, boolean smsEnabled,
 			boolean emailEnabled) {
 		this.setfPos(fPos);
@@ -61,4 +65,5 @@ public class Configurazione {
 		this.setSmsEnabled(smsEnabled);
 		this.setEmailEnabled(emailEnabled);		
 	}
+*/
 }

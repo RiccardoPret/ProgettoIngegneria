@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
+import util.Configurazione;
+import util.Dispositivo;
+import util.User;
+
 /**
  * Questa classe mette a disposizione i metodi per effettuare interrogazioni
  * sulla base di dati.
@@ -144,52 +148,33 @@ public class ClientDataSource implements Serializable {
 
 	/*
 	 * ritorna il dispositivo a partire dall'username
-	 */
+	 
 	public Dispositivo getDispositivoFromUser(String username) {
 		driver.openConnection();
 		Dispositivo device= driver.getDispositivo(username);
 		driver.closeConnection();
 		return device;
 	}
-
-	public String getEmail(String username) {
-		driver.openConnection();
-		String email= driver.getEmail(username);
-		driver.closeConnection();
-		return email;
-	}
-
-	public String getTelefono(String username) {
-		driver.openConnection();
-		String tel= driver.getTelefono(username);
-		driver.closeConnection();
-		return tel;
-	}
-
-	public void updateEmail(String username, String email) {
-		driver.openConnection();
-		driver.updateProfile(username, "mail", email);
-		driver.closeConnection();
-	}
-
-	public void updateTelefono(String username, String tel) {
-		driver.openConnection();
-		driver.updateProfile(username, "numTelefono", tel);
-		driver.closeConnection();
-	}
-
-	public String getVideo(String username) {
-		driver.openConnection();
-		String video= driver.getStreamLink(username);
-		driver.closeConnection();
-		return video;
-	}
-
+*/
 	public Configurazione getConfigurazione(Dispositivo dispositivo) {
 		driver.openConnection();
 		Configurazione conf= driver.getConfigurazione(dispositivo);
 		driver.closeConnection();
 		return conf;
+	}
+
+	public User getUser(String utente) {
+		driver.openConnection();
+		User user= driver.getUser(utente);
+		driver.closeConnection();
+		return user;
+	}
+
+	public void updateDbInstance(User client, Configurazione config) {
+		driver.openConnection();
+		driver.updateProfile(client);
+		driver.updateSetting(config);
+		driver.closeConnection();
 	}
 
 }

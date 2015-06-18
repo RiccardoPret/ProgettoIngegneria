@@ -22,14 +22,13 @@
 				<h:outputText id="welcome" value="#{securityBacking.welcome}"/>
 				
 				<p>Dispositivo:</p>
-				<h:outputText id="iddispositivo" value="#{clientBean.idDispositivo}"/>
+				<h:outputText id="iddispositivo" value="#{clientBean.user.dispositivo.id}"/>
 				<p>Modello Dispositivo:</p>
-				<h:outputText id="modellodispositivo" value="#{clientBean.modelloDispositivo}"/>
+				<h:outputText id="modellodispositivo" value="#{clientBean.user.dispositivo.modello}"/>
 				<p>Email:</p>
-				<h:outputText id="email" value="#{clientBean.email}"/>
-				
+				<h:outputText id="email" value="#{clientBean.user.email}"/>
 				<p>Telefono:</p>
-				<h:outputText id="telefono" value="#{clientBean.telefono}"/>
+				<h:outputText id="telefono" value="#{clientBean.user.telefono}"/>
 				
 				<h2>Configurazione</h2>
 				

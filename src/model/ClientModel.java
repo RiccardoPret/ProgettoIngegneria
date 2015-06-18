@@ -1,8 +1,6 @@
 package model;
 
 import controller.ClientDataSource;
-import controller.Configurazione;
-import controller.Dispositivo;
 
 /**
  * Data Bean per tutti i dati del cliente
