@@ -19,7 +19,6 @@
 	  		</ui:define>
 	  		
 			<ui:define name="content">
-				<p>Bentornato</p>
 				<h:outputText id="welcome" value="#{securityBacking.welcome}"/>
 				
 				<p>Dispositivo:</p>
