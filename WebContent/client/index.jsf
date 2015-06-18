@@ -8,40 +8,102 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-	<h:head>Client Page</h:head>
 	<h:body>
 		<ui:composition template="/templates/layout.jsf">
 			<ui:define name="windowTitle">
-	   			 Home cliente
-	  		</ui:define>
-	  		<ui:define name="sidebar">
-	  			<ui:include src="/client/sidebar_cliente.jsf" />
-	  		</ui:define>
-	  		
-			<ui:define name="content">
-				<h:outputText id="welcome" value="#{securityBacking.welcome}"/>
-				
-				<p>Dispositivo:</p>
-				<h:outputText id="iddispositivo" value="#{clientBean.user.dispositivo.id}"/>
-				<p>Modello Dispositivo:</p>
-				<h:outputText id="modellodispositivo" value="#{clientBean.user.dispositivo.modello}"/>
-				<p>Email:</p>
-				<h:outputText id="email" value="#{clientBean.user.email}"/>
-				<p>Telefono:</p>
-				<h:outputText id="telefono" value="#{clientBean.user.telefono}"/>
-				
-				<h2>Configurazione</h2>
-				
-				
-				<h:form>
-					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
-				</h:form>
-					<div style="height:0px;width=0px">
+				#{msgs.name} | profilo
+			</ui:define>
+			<ui:define name="sidebar">
+				<ui:include src="/client/sidebar_cliente.jsf" />
+			</ui:define>
 
-					<h:outputText value="&lt;iframe width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/khmudXrDemU?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8"
-escape="false" style="height:0px;width:0px"/> 
-				</div>
-				
+			<ui:define name="content">
+				<header>
+					<h2>
+						Profilo
+					</h2>
+				</header>
+				<h:form>
+					<h:panelGroup layout="block" id="info_utente">
+
+						<p:messages autoUpdate="true"/>
+						<!-- tabella con informazioni utente -->
+							<table class="border_top">
+								<tr>
+									<th colspan="2">Informazioni Utente</th>
+								</tr>
+								<tr>
+									<td class="left"><strong>codice dispositivo</strong></td>
+									<td class="right">#{clientBean.user.dispositivo.id}</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>E-mail</strong></td>
+									<td class="right">
+										<p:inputText id="mail" value="#{clientBean.user.email}" validatorMessage="E-mail non valida">
+		                					<f:validateRegex pattern=".+@.+\..+" />
+		            					</p:inputText>
+									</td>
+								</tr>
+								<div class="spacing vertical"/>
+								<tr>
+									<td class="left"><strong>Telefono</strong></td>
+									<td class="right">
+										<p:inputText id="tel" value="#{clientBean.user.telefono}" validatorMessage="Numero di telefono non valido">
+		                					<f:validateRegex pattern="[0-9 ]*" />
+		            					</p:inputText>
+		            				</td>
+								</tr>
+
+							</table>
+						<!-- tabella con la configurazione del dispositivo-->
+
+							<table class="border_top">
+								<tr>
+									<th colspan="2">Configurazione dispositivo</th>
+								</tr>
+								<tr>
+									<td class="left"><strong>intervallo rilevamento posizione (in secondi)</strong></td>
+									<td class="right">
+										<p:inputMask id="freqRil" value="#{clientBean.configurazione.formattedFpos}" validatorMessage="E-mail non valida" mask="99:99:99">
+		                					<f:validateRegex pattern="(([0-1][0-9])|([2][0-3])):[0-5][0-9]:[0-5][0-9]" />
+		            					</p:inputMask>
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>intervallo invio notifiche</strong></td>
+									<td class="right">
+										<p:inputMask id="freqSms" value="#{clientBean.configurazione.formattedFsms}" validatorMessage="E-mail non valida" mask="99:99:99">
+		                					<f:validateRegex pattern="(([0-1][0-9])|([2][0-3])):[0-5][0-9]:[0-5][0-9]" />
+		            					</p:inputMask>
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>Allarme velocita</strong></td>
+									<td class="right">
+										<inputText id="alarmvel" value="#{clientBean.configurazione.speedAlarm}"></inputText>
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>ricevere notifiche via email</strong></td>
+									<td class="right">
+										<p:selectBooleanCheckbox value="#{clientBean.configurazione.emailEnabled}" />
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>ricevere notifiche via sms</strong></td>
+									<td class="right">
+										<p:selectBooleanCheckbox value="#{clientBean.configurazione.smsEnabled}" />
+									</td>
+								</tr>
+
+							</table>
+
+
+						<p:commandButton value="Salva" actionListener="#{provaAjax.save}" update="info_utente"/>
+						<p:commandButton value="Cancel" actionListener="#{provaAjax.save}" update="info_utente" type="reset"/>
+					<ui:debug />
+					</h:panelGroup>
+				</h:form>
 			</ui:define>
 		</ui:composition>	
 	</h:body>
