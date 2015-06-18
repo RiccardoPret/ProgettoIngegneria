@@ -180,6 +180,30 @@ public class DatabaseDriver {
 		}
 		return false;
 	}
+	
+	public String userExistsSH(String username) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		String sql = Query.getInstance().getQuery("query_getHash");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, username);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) { // User exist with the given user name and
+								// password.
+				System.out.println(rs.getString(1));
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
 
 	public List<String> getRoles(String username) {
 		ResultSet rs = null;

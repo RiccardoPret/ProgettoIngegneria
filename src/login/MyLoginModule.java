@@ -1,6 +1,8 @@
 package login;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +68,7 @@ public class MyLoginModule implements LoginModule {
 				throw new LoginException(
 						"Callback handler does not return login data properly");
 			}
-			if (isValidUser()){
+			if (isValidUserSH()){
 				loginSucceeded = true;
 				return true;
 			}
@@ -87,6 +89,25 @@ public class MyLoginModule implements LoginModule {
 		userExists = driver.userExists(this.username, this.password);
 		driver.closeConnection();
 		return userExists;
+	}
+	
+	private boolean isValidUserSH() {
+		boolean userExists;
+
+		DatabaseDriver driver = DatabaseDriver.getInstance();
+		driver.openConnection();
+		String hash = driver.userExistsSH(this.username);
+		driver.closeConnection();
+		System.out.println(this.password);
+		System.out.println(hash);
+		
+		try {
+			return PasswordHash.validatePassword(new String(this.password),new String(hash));
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override
