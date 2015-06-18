@@ -52,6 +52,13 @@ public class Configurazione {
 	public void setspeedAlarm(Integer speed) {
 		this.speedAlarm = speed;
 	}
-	
 
+	public void setAll(int fPos, int fSms, int speed, boolean smsEnabled,
+			boolean emailEnabled) {
+		this.setfPos(fPos);
+		this.setfSms(fSms);
+		this.setspeedAlarm(speed);
+		this.setSmsEnabled(smsEnabled);
+		this.setEmailEnabled(emailEnabled);		
+	}
 }

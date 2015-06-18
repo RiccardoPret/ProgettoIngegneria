@@ -152,29 +152,44 @@ public class ClientDataSource implements Serializable {
 		return device;
 	}
 
-	public String getPassword(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String getEmail(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		driver.openConnection();
+		String email= driver.getEmail(username);
+		driver.closeConnection();
+		return email;
 	}
 
 	public String getTelefono(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		driver.openConnection();
+		String tel= driver.getTelefono(username);
+		driver.closeConnection();
+		return tel;
 	}
 
-	public void updateEmail(Dispositivo dispositivo, String email) {
-		// TODO Auto-generated method stub
-		
+	public void updateEmail(String username, String email) {
+		driver.openConnection();
+		driver.updateProfile(username, "mail", email);
+		driver.closeConnection();
 	}
 
-	public void updateTelefono(Dispositivo dispositivo, String tel) {
-		// TODO Auto-generated method stub
-		
+	public void updateTelefono(String username, String tel) {
+		driver.openConnection();
+		driver.updateProfile(username, "numTelefono", tel);
+		driver.closeConnection();
+	}
+
+	public String getVideo(String username) {
+		driver.openConnection();
+		String video= driver.getStreamLink(username);
+		driver.closeConnection();
+		return video;
+	}
+
+	public Configurazione getConfigurazione(Dispositivo dispositivo) {
+		driver.openConnection();
+		Configurazione conf= driver.getConfigurazione(dispositivo);
+		driver.closeConnection();
+		return conf;
 	}
 
 }

@@ -20,7 +20,8 @@ public class ClientBean implements Serializable {
 	private String username = "";
 	private String email = "";
 	private String telefono = "";
-
+	private String video="";
+	private Configurazione config;
 	
 	public ClientBean() {
 		this.ds = new ClientDataSource();
@@ -35,6 +36,8 @@ public class ClientBean implements Serializable {
 		this.dispositivo=ds.getDispositivoFromUser(this.username);
 		this.email=ds.getEmail(this.username);
 		this.telefono=ds.getTelefono(this.username);
+		this.video=ds.getVideo(this.username);
+		this.config=ds.getConfigurazione(this.dispositivo);
 	}
 	
 	public void setSecurityBacking(SecurityBacking s){
@@ -57,6 +60,10 @@ public class ClientBean implements Serializable {
 	public String getUsername() {
 		return this.username;
 	}
+	
+	public String getVideo() {
+		return video;
+	}
 
 	//Valori modificabili
 	public String getEmail() {
@@ -65,7 +72,8 @@ public class ClientBean implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-		ds.updateEmail(this.dispositivo, email);
+		//aggiorno il db
+		ds.updateEmail(this.username, email);
 	}
 
 	public String getTelefono() {
@@ -74,6 +82,12 @@ public class ClientBean implements Serializable {
 
 	public void setTelefono(String tel) {
 		this.telefono = tel;
-		ds.updateTelefono(this.dispositivo, tel);
+		//aggiorno il db
+		ds.updateTelefono(this.username, tel);
 	}
+	
+	public Configurazione getConfigurazione(){
+		return this.config;
+	}
+
 }

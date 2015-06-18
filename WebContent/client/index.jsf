@@ -22,8 +22,19 @@
 				<p>Bentornato</p>
 				<h:outputText id="welcome" value="#{securityBacking.welcome}"/>
 				
-				<p>Id dispositivo:</p>
-				<h:outputText id="dispositivo" value="#{clientBean.idDispositivo}"/>
+				<p>Dispositivo:</p>
+				<h:outputText id="iddispositivo" value="#{clientBean.idDispositivo}"/>
+				<p>Modello Dispositivo:</p>
+				<h:outputText id="modellodispositivo" value="#{clientBean.modelloDispositivo}"/>
+				<p>Email:</p>
+				<h:outputText id="email" value="#{clientBean.email}"/>
+				
+				<p>Telefono:</p>
+				<h:outputText id="telefono" value="#{clientBean.telefono}"/>
+				
+				<h2>Configurazione</h2>
+				
+				
 				<h:form>
 					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
 				</h:form>

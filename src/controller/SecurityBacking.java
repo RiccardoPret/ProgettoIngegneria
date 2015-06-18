@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 @SessionScoped
 public class SecurityBacking implements Serializable{
 
-	private String username;
-
 	public String invalidateSession() {
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
@@ -23,8 +21,7 @@ public class SecurityBacking implements Serializable{
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context
 				.getExternalContext().getRequest();
-		this.username = request.getUserPrincipal().getName();
-		return username;
+		return request.getUserPrincipal().getName();
 	}
 
 	public String logout() {
