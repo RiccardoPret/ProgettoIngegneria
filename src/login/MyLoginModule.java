@@ -92,7 +92,6 @@ public class MyLoginModule implements LoginModule {
 	}
 	
 	private boolean isValidUserSH() {
-		boolean userExists;
 
 		DatabaseDriver driver = DatabaseDriver.getInstance();
 		driver.openConnection();

@@ -287,7 +287,7 @@ public class DatabaseDriver {
 
 				user.setDispositivo(device);
 				user.setEmail(rs.getString("mail"));
-				user.setTelefono("numTelefono");
+				user.setTelefono(rs.getString("numTelefono"));
 				user.setVideo(rs.getString("linkStreaming"));
 			}
 		} catch (SQLException e) {
