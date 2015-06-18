@@ -335,7 +335,6 @@ public class DatabaseDriver {
 		String sql=Query.getInstance().getQuery("update_profile");
 		
 		checkInstantiation();
-		
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, client.getEmail());

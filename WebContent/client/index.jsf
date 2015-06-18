@@ -99,8 +99,8 @@
 							</table>
 
 
-						<p:commandButton value="Salva" actionListener="#{provaAjax.save}" update="info_utente"/>
-						<p:commandButton value="Cancel" actionListener="#{provaAjax.save}" update="info_utente" type="reset"/>
+						<p:commandButton value="Salva" actionListener="#{clientBean.updateDb}" update="info_utente"/>
+						<p:commandButton value="Cancel" update="info_utente" type="reset"/>
 					<ui:debug />
 					</h:panelGroup>
 				</h:form>
