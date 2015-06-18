@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+	<h:body>
+		<ui:composition template="/templates/layout.jsf">
+			<ui:define name="windowTitle">
+				#{msgs.name} | profilo
+			</ui:define>
+			<ui:define name="sidebar">
+				<ui:include src="/client/sidebar_cliente.jsf" />
+			</ui:define>
+
+			<ui:define name="content">
+				<header>
+					<h2>
+						Profilo
+					</h2>
+				</header>
+				<h:form>
+					<h:panelGroup layout="block" id="info_utente">
+
+						<p:messages autoUpdate="true"/>
+						<!-- tabella con informazioni utente -->
+							<table class="border_top">
+								<tr>
+									<th colspan="2">Informazioni Utente</th>
+								</tr>
+								<tr>
+									<td class="left"><strong>codice dispositivo</strong></td>
+									<td class="right">ababab #{ImmobileView.venditaSelezionata.codice}</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>E-mail</strong></td>
+									<td class="right">
+										<p:inputText id="mail" value="#{provaAjax.firstname}" validatorMessage="E-mail non valida">
+		                					<f:validateRegex pattern=".+@.+\..+" />
+		            					</p:inputText>
+									</td>
+								</tr>
+								<div class="spacing vertical"/>
+								<tr>
+									<td class="left"><strong>Telefono</strong></td>
+									<td class="right">
+										<p:inputText id="tel" value="#{provaAjax.lastname}" validatorMessage="Numero di telefono non valido">
+		                					<f:validateRegex pattern="[0-9 ]*" />
+		            					</p:inputText>
+		            				</td>
+								</tr>
+
+							</table>
+						<!-- tabella con la configurazione del dispositivo-->
+
+							<table class="border_top">
+								<tr>
+									<th colspan="2">Configurazione dispositivo</th>
+								</tr>
+								<tr>
+									<td class="left"><strong>intervallo rilevamento posizione (in secondi)</strong></td>
+									<td class="right">
+										<p:inputMask id="freqRil" value="#{provaAjax.freqRil}" validatorMessage="E-mail non valida" mask="99:99:99">
+		                					<f:validateRegex pattern="(([0-1][0-9])|([2][0-3])):[0-5][0-9]:[0-5][0-9]" />
+		            					</p:inputMask>
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>intervallo invio notifiche</strong></td>
+									<td class="right">
+										<p:inputText id="freqMex" value="aaa"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>ricevere notifiche via email</strong></td>
+									<td class="right">
+										<p:selectBooleanCheckbox value="false" />
+									</td>
+								</tr>
+								<tr>
+									<td class="left"><strong>ricevere notifiche via sms</strong></td>
+									<td class="right">
+										<p:selectBooleanCheckbox value="false" />
+									</td>
+								</tr>
+
+							</table>
+
+
+						<p:commandButton value="Salva" actionListener="#{provaAjax.save}" update="info_utente"/>
+						<p:commandButton value="Cancel" actionListener="#{provaAjax.save}" update="info_utente" type="reset"/>
+					<ui:debug />
+					</h:panelGroup>
+				</h:form>
+			</ui:define>
+		</ui:composition>	
+	</h:body>
+</html>

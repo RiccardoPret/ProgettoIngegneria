@@ -22,6 +22,9 @@
 				</ul>
 			</nav>
 		</h:form>
+		<h:form>
+			<h:commandButton action="#{securityBacking.logout}" value="Logout" />
+		</h:form>
 	</ui:composition>
 </body>
 </html>
