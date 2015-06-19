@@ -13,6 +13,7 @@ public class Listener implements ServletContextListener {
         // Do your thing during webapp's startup.
     	 System.out.println("listener");
          Gestore_connessioniEntrata.getInstance().startAllSocket();
+         Gestore_connessioniUscita.getInstance();
     }
     public void contextDestroyed(ServletContextEvent event) {
         // Do your thing during webapp's shutdown.

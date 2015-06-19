@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import Socket.Gestore_connessioniUscita;
 import model.Configurazione;
 import model.User;
 
@@ -53,5 +54,6 @@ public class ClientBean implements Serializable {
 
 	public void updateDb(){
 		ds.updateDbInstance(this.client, this.config);
+		Gestore_connessioniUscita.getInstance().updateConfig(client.getDispositivo().getId());
 	}
 }

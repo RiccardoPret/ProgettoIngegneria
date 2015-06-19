@@ -24,7 +24,6 @@ public class ConfigSocket implements Runnable {
 
 		while (active) {
 			try {
-				System.out.println("ascolto sulla porta 4000");
 				new Thread(new sendConfigSocket(configPort.accept())).start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

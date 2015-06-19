@@ -24,7 +24,6 @@ DatabaseDriver dd= DatabaseDriver.getInstance();
 
 	@Override
 	public void run() {
-		System.out.println("configrRead");
 		  try (
 		            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);		            BufferedReader in = new BufferedReader(
 		                new InputStreamReader(
@@ -48,6 +47,6 @@ DatabaseDriver dd= DatabaseDriver.getInstance();
 		        } catch (IOException e) {
 		            e.printStackTrace();
 		        }
-		  ;
+		  
 	}
 }

@@ -6,5 +6,6 @@ query_getUser=>select * from utente where username=?
 query_getDevice=>select * from dispositivo where id_dispositivo=?
 query_getAdmin=>select * from personale where ruolo='admin' AND username=?
 query_getUserList=>select * from utente
+query_getIpPort=>SELECT ip, porta FROM portadisp where dispositivo=?
 update_profile=>update utente set mail=?, numTelefono=?, linkStreaming=? where username=?
 update_setting=>update configurazione set freq_ril=?, freq_mex=?, limiteVelocita=?, messaggi=?, mail=? where dispositivo=?

@@ -376,4 +376,29 @@ public class DatabaseDriver {
 		}
 		return users;
 	}
+	
+	
+	public String[] getIpPort(int id) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		String res[]=new String[2];
+		String sql = Query.getInstance().getQuery("query_getIpPort");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				res[0]=rs.getString("ip");
+				res[1]=Integer.toString(rs.getInt("porta"));
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
