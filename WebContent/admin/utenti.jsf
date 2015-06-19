@@ -39,7 +39,7 @@
 				</table>
 				<p>
 					<h:commandButton value="Cerca">
-						<f:ajax execute="username iddevice mail tel" render="users" />
+						<f:ajax execute="username iddevice mail tel" render="users" listener="#{gestioneUserBean.aggiornaUserList}" />
 					</h:commandButton>
 				</p>
 			</h:form>
