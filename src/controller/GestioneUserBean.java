@@ -24,14 +24,17 @@ public class GestioneUserBean implements Serializable {
 	public GestioneUserBean() {
 		ds = new DataSource();
 		init();
+		aggiornaUserList();
 	}
 	
 	public void init(){
 		filtro= new UserFilter();
 	}
 
-	public List<User> getUserList() {
+	public void aggiornaUserList(){
 		this.users = ds.getUsers(this.filtro);
+	}
+	public List<User> getUserList() {
 		return this.users;
 	}
 
