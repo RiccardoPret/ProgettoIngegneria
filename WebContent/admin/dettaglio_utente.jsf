@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>Admin Page</h:head>
+<h:body>
+	<ui:composition template="/templates/layout.jsf">
+		<ui:define name="windowTitle">
+				#{msgs.name} | Utenti
+			</ui:define>
+		<ui:define name="sidebar">
+			<ui:include src="/admin/sidebar_admin.jsf" />
+		</ui:define>
+
+		<ui:define name="content">
+			<h2>Profilo</h2>
+			<h:form>
+				<h:panelGroup layout="block" id="info_utente">
+					<!-- tabella con informazioni utente -->
+					<table class="border_top">
+						<tr>
+							<th colspan="2">Informazioni Utente</th>
+						</tr>
+						<tr>
+							<td class="left"><strong>Username</strong></td>
+							<td class="right">#{gestioneUserBean.user.username}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>codice dispositivo</strong></td>
+							<td class="right">#{gestioneUserBean.user.dispositivo.id}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>E-mail</strong></td>
+							<td class="right">#{gestioneUserBean.user.email}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>Telefono</strong></td>
+							<td class="right">#{gestioneUserBean.user.telefono}</td>
+						</tr>
+					</table>
+					
+					<!-- tabella con la configurazione del dispositivo-->
+					<table class="border_top">
+						<tr>
+							<th colspan="2">Configurazione dispositivo</th>
+						</tr>
+						<tr>
+							<td class="left"><strong>intervallo rilevamento
+									posizione (in secondi)</strong></td>
+							<td class="right">#{gestioneUserBean.currentUserConfigurazione.fPos}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>intervallo invio notifiche</strong></td>
+							<td class="right">#{gestioneUserBean.currentUserConfigurazione.fSms}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>Allarme Velocita</strong></td>
+							<td class="right">#{gestioneUserBean.currentUserConfigurazione.speedAlarm}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>ricevere notifiche via
+									email</strong></td>
+							<td class="right">#{gestioneUserBean.currentUserConfigurazione.emailEnabled}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>ricevere notifiche via sms</strong></td>
+							<td class="right">#{gestioneUserBean.currentUserConfigurazione.smsEnabled}</td>
+						</tr>
+					</table>
+
+					<ui:debug />
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
