@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Admin;
+import model.PersonaleAzienda;
 import model.Configurazione;
 import model.Dispositivo;
 import model.User;
@@ -290,5 +292,30 @@ public class DatabaseDriver {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Admin getAdmin(String username) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		Admin admin = null;
+		String sql = Query.getInstance().getQuery("query_getAdmin");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, username);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				admin= new Admin(username);
+				admin.setNome(rs.getString("nome"));
+				admin.setCognome(rs.getString("cognome"));
+				admin.setRuolo("admin");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return admin;
 	}
 }

@@ -16,13 +16,14 @@
 		<ui:param name="view" value="#{facesContext.viewRoot.viewId}" />
 			<nav id="nav">
 				<ul>
-					<li class="#{view == '/cliente/index.jsf' ? 'current' : ''}"><h:commandLink action="index" value="Home"/></li>	
-					<li class="#{view == '/cliente/posizioneAttuale.jsf' ? 'current' : ''}"><h:commandLink action="posizioneAttuale" value="Posizione Attuale"/></li>	
-					<li class="#{view == '/cliente/configurazione.jsf' ? 'current' : ''}"><h:commandLink action="configurazione" value="Configurazione"/></li>	
+					<li class="#{view == '/admin/index.jsf' ? 'current' : ''}"><h:commandLink action="index" value="Home"/></li>	
+					<li class="#{view == '/admin/utenti.jsf' ? 'current' : ''}"><h:commandLink action="utenti" value="Utenti"/></li>	
 				</ul>
 			</nav>
 		</h:form>
-
+		<h:form>
+			<h:commandButton action="#{securityBacking.logout}" value="Logout" />
+		</h:form>
 	</ui:composition>
 </body>
 </html>

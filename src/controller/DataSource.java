@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
+import model.Admin;
+import model.PersonaleAzienda;
 import model.Configurazione;
 import model.Dispositivo;
 import model.User;
 
 /**
  * Questa classe mette a disposizione i metodi per effettuare interrogazioni
- * sulla base di dati.
+ * sulla base di dati, sfruttabile dai bean
  */
-public class ClientDataSource implements Serializable {
+public class DataSource implements Serializable {
 
 	// === Properties
-
-	// dati di identificazione dell'utente (da personalizzare)
 	private DatabaseDriver driver;
 
 	// -- definizione delle query
@@ -41,7 +41,7 @@ public class ClientDataSource implements Serializable {
 
 	// === Methods
 
-	public ClientDataSource() {
+	public DataSource() {
 		driver = DatabaseDriver.getInstance();
 	}
 
@@ -175,6 +175,13 @@ public class ClientDataSource implements Serializable {
 		User user= driver.getUser(utente);
 		driver.closeConnection();
 		return user;
+	}
+	
+	public Admin getAdmin(String username) {
+		driver.openConnection();
+		Admin admin= driver.getAdmin(username);
+		driver.closeConnection();
+		return admin;
 	}
 
 	/*

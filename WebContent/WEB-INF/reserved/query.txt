@@ -4,5 +4,6 @@ query_getHash=>select password from userlist where username=?
 query_getConfig=>select * from configurazione where dispositivo=?
 query_getUser=>select * from utente where username=?
 query_getDevice=>select * from dispositivo where id_dispositivo=?
+query_getAdmin=>select * from personale where ruolo='admin' AND username=?
 update_profile=>update utente set mail=?, numTelefono=?, linkStreaming=? where username=?
 update_setting=>update configurazione set freq_ril=?, freq_mex=?, limiteVelocita=?, messaggi=?, mail=? where dispositivo=?

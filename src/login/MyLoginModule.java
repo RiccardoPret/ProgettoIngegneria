@@ -34,7 +34,7 @@ public class MyLoginModule implements LoginModule {
 	private String username;
 	private char[] password = null;
 	private boolean debug;
-	
+
 	private boolean loginSucceeded;
 	private boolean commitSucceeded;
 
@@ -73,9 +73,9 @@ public class MyLoginModule implements LoginModule {
 				throw new LoginException(
 						"Callback handler does not return login data properly");
 			}
-			if (isValidUserSH()){
+			if (isValidUserSH()) {
 				loginSucceeded = true;
-				//Il login ha avuto successo: il dispositivo va attivato
+				// Il login ha avuto successo: il dispositivo va attivato
 				activateDevice(username);
 				return true;
 			}
@@ -84,25 +84,25 @@ public class MyLoginModule implements LoginModule {
 		} catch (UnsupportedCallbackException e) {
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
-	
-	//TODO testare che attivi il dispositivo
-	private void activateDevice(String username){
-		DatabaseDriver driver= DatabaseDriver.getInstance();
+
+	// TODO testare che attivi il dispositivo
+	private void activateDevice(String username) {
+		DatabaseDriver driver = DatabaseDriver.getInstance();
 		PreparedStatement stmt = null;
 		String sql = "select D.id_dispositivo from dispositivo d, utente u where u.dispositivo=d.id_dispositivo AND u.username=?";
-		String sql2= "update dispositivo set attivo=TRUE where id_dispositivo=?";
+		String sql2 = "update dispositivo set attivo=TRUE where id_dispositivo=?";
 		driver.openConnection();
-		
+
 		try {
 			stmt = driver.getOpenedConnection().prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				int id= rs.getInt("id_dispositivo");
+				int id = rs.getInt("id_dispositivo");
 				stmt = driver.getOpenedConnection().prepareStatement(sql2);
 				stmt.setInt(1, id);
 				stmt.executeUpdate();
@@ -113,7 +113,8 @@ public class MyLoginModule implements LoginModule {
 		driver.closeConnection();
 	}
 
-	//Non usato. Può essere usato al posto di quello che cripta le password: isValidUserSH
+	// Non usato. Può essere usato al posto di quello che cripta le password:
+	// isValidUserSH
 	private boolean isValidUser() {
 		boolean userExists;
 
@@ -123,7 +124,7 @@ public class MyLoginModule implements LoginModule {
 		driver.closeConnection();
 		return userExists;
 	}
-	
+
 	private boolean isValidUserSH() {
 
 		DatabaseDriver driver = DatabaseDriver.getInstance();
@@ -132,9 +133,10 @@ public class MyLoginModule implements LoginModule {
 		driver.closeConnection();
 		System.out.println(this.password);
 		System.out.println(hash);
-		
+
 		try {
-			return PasswordHash.validatePassword(new String(this.password),new String(hash));
+			return PasswordHash.validatePassword(new String(this.password),
+					new String(hash));
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -7,30 +7,26 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import model.Configurazione;
-import model.User;
+import model.Admin;
 
 @ManagedBean
 @SessionScoped
-public class ClientBean implements Serializable {
-
+public class AdminBean implements Serializable{
+	
 	@ManagedProperty(value="#{securityBacking}")
 	private SecurityBacking securityBacking;
 	
 	private DataSource ds;
-	private User client;
-	private Configurazione config;
+	private Admin admin;
 	
-	public ClientBean() {
-		this.ds = new DataSource();
+	public AdminBean() {
+		this.ds= new DataSource();
 	}
 	
 	@PostConstruct
 	public void init(){
 		//Creo l'utente coi valori settati
-		this.client=ds.getUser(this.securityBacking.getWelcome());
-		//Creo la configurazione coi valori settati
-		this.config=ds.getConfigurazione(this.client.getDispositivo());
+		this.admin=ds.getAdmin(this.securityBacking.getWelcome());
 	}
 	
 	//Metodo obbligatorio per il ManagedProperty
@@ -42,16 +38,8 @@ public class ClientBean implements Serializable {
 	public SecurityBacking getSecurityBacking(){
 		return this.securityBacking;
 	}
-
-	public User getUser(){
-		return this.client;
-	}
 	
-	public Configurazione getConfigurazione(){
-		return this.config;
-	}
-
-	public void updateDb(){
-		ds.updateDbInstance(this.client, this.config);
+	public Admin getAdmin(){
+		return this.admin;
 	}
 }

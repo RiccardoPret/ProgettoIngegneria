@@ -15,9 +15,6 @@
 			<ui:define name="windowTitle">
 	    		#{msgs.AgencyHome}
 	  		</ui:define>
-	  		<ui:define name="sidebar">
-	  			<ui:include src="/sidebar.jsf" />
-	  		</ui:define>
 
 			<ui:define name="content">
 				<form id="loginForm" method="post" action="j_security_check">

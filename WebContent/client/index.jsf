@@ -8,100 +8,103 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-	<h:body>
-		<ui:composition template="/templates/layout.jsf">
-			<ui:define name="windowTitle">
+<h:body>
+	<ui:composition template="/templates/layout.jsf">
+		<ui:define name="windowTitle">
 				#{msgs.name} | profilo
 			</ui:define>
-			<ui:define name="sidebar">
-				<ui:include src="/client/sidebar_cliente.jsf" />
-			</ui:define>
+		<ui:define name="sidebar">
+			<ui:include src="/client/sidebar_cliente.jsf" />
+		</ui:define>
 
-			<ui:define name="content">
-				<header>
-					<h2>
-						Profilo
-					</h2>
-				</header>
-				<h:form>
-					<h:panelGroup layout="block" id="info_utente">
+		<ui:define name="content">
+			<header>
+			<h2>Profilo</h2>
+			</header>
+			<h:form>
+				<h:panelGroup layout="block" id="info_utente">
 
-						<p:messages autoUpdate="true"/>
-						<!-- tabella con informazioni utente -->
-							<table class="border_top">
-								<tr>
-									<th colspan="2">Informazioni Utente</th>
-								</tr>
-								<tr>
-									<td class="left"><strong>codice dispositivo</strong></td>
-									<td class="right">#{clientBean.user.dispositivo.id}</td>
-								</tr>
-								<tr>
-									<td class="left"><strong>E-mail</strong></td>
-									<td class="right">
-										<p:inputText id="mail" value="#{clientBean.user.email}" validatorMessage="E-mail non valida">
-		                					<f:validateRegex pattern=".+@.+\..+" />
-		            					</p:inputText>
-									</td>
-								</tr>
-								<div class="spacing vertical"/>
-								<tr>
-									<td class="left"><strong>Telefono</strong></td>
-									<td class="right">
-										<p:inputMask id="tel" value="#{clientBean.user.telefono}" validatorMessage="Telefono non valido">
-		            					</p:inputMask>
-		            				</td>
-								</tr>
+					<p:messages autoUpdate="true" />
+					<!-- tabella con informazioni utente -->
+					<table class="border_top">
+						<tr>
+							<th colspan="2">Informazioni Utente</th>
+						</tr>
+						<tr>
+							<td class="left"><strong>Username</strong></td>
+							<td class="right">#{clientBean.user.username}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>codice dispositivo</strong></td>
+							<td class="right">#{clientBean.user.dispositivo.id}</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>E-mail</strong></td>
+							<td class="right"><p:inputText id="mail"
+									value="#{clientBean.user.email}"
+									validatorMessage="E-mail non valida">
+									<f:validateRegex pattern=".+@.+\..+" />
+								</p:inputText></td>
+						</tr>
+						<div class="spacing vertical" />
+						<tr>
+							<td class="left"><strong>Telefono</strong></td>
+							<td class="right"><p:inputMask id="tel"
+									value="#{clientBean.user.telefono}"
+									validatorMessage="Telefono non valido">
+								</p:inputMask></td>
+						</tr>
 
-							</table>
-						<!-- tabella con la configurazione del dispositivo-->
+					</table>
+					<!-- tabella con la configurazione del dispositivo-->
 
-							<table class="border_top">
-								<tr>
-									<th colspan="2">Configurazione dispositivo</th>
-								</tr>
-								<tr>
-									<td class="left"><strong>intervallo rilevamento posizione (in secondi)</strong></td>
-									<td class="right">
-										<p:inputMask id="freqRil" value="#{clientBean.configurazione.fPos}" validatorMessage="E-mail non valida">
-		            					</p:inputMask>
-									</td>
-								</tr>
-								<tr>
-									<td class="left"><strong>intervallo invio notifiche</strong></td>
-									<td class="right">
-										<p:inputMask id="freqSms" value="#{clientBean.configurazione.fSms}" validatorMessage="E-mail non valida">
-		                					
-		            					</p:inputMask>
-									</td>
-								</tr>
-								<tr>
-									<td class="left"><strong>Allarme velocita</strong></td>
-									<td class="right">
-										<p:inputText id="alarmvel" value="#{clientBean.configurazione.speedAlarm}"></p:inputText>
-									</td>
-								</tr>
-								<tr>
-									<td class="left"><strong>ricevere notifiche via email</strong></td>
-									<td class="right">
-										<p:selectBooleanCheckbox value="#{clientBean.configurazione.emailEnabled}" />
-									</td>
-								</tr>
-								<tr>
-									<td class="left"><strong>ricevere notifiche via sms</strong></td>
-									<td class="right">
-										<p:selectBooleanCheckbox value="#{clientBean.configurazione.smsEnabled}" />
-									</td>
-								</tr>
-							</table>
+					<table class="border_top">
+						<tr>
+							<th colspan="2">Configurazione dispositivo</th>
+						</tr>
+						<tr>
+							<td class="left"><strong>intervallo rilevamento
+									posizione (in secondi)</strong></td>
+							<td class="right"><p:inputMask id="freqRil"
+									value="#{clientBean.configurazione.fPos}"
+									validatorMessage="E-mail non valida">
+								</p:inputMask></td>
+						</tr>
+						<tr>
+							<td class="left"><strong>intervallo invio notifiche</strong></td>
+							<td class="right"><p:inputMask id="freqSms"
+									value="#{clientBean.configurazione.fSms}"
+									validatorMessage="E-mail non valida">
+
+								</p:inputMask></td>
+						</tr>
+						<tr>
+							<td class="left"><strong>Allarme velocita</strong></td>
+							<td class="right"><p:inputText id="alarmvel"
+									value="#{clientBean.configurazione.speedAlarm}"></p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="left"><strong>ricevere notifiche via
+									email</strong></td>
+							<td class="right"><p:selectBooleanCheckbox
+									value="#{clientBean.configurazione.emailEnabled}" /></td>
+						</tr>
+						<tr>
+							<td class="left"><strong>ricevere notifiche via sms</strong></td>
+							<td class="right"><p:selectBooleanCheckbox
+									value="#{clientBean.configurazione.smsEnabled}" /></td>
+						</tr>
+					</table>
 
 
-						<p:commandButton value="Salva" actionListener="#{clientBean.updateDb}" update="info_utente"/>
-						<p:commandButton value="Cancel" update="info_utente" type="reset"/>
+					<p:commandButton value="Salva"
+						actionListener="#{clientBean.updateDb}" update="info_utente" />
+					<p:commandButton value="Cancel" update="info_utente" type="reset" />
 					<ui:debug />
-					</h:panelGroup>
-				</h:form>
-			</ui:define>
-		</ui:composition>	
-	</h:body>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
 </html>
