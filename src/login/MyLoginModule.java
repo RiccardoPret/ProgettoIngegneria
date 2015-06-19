@@ -3,6 +3,9 @@ package login;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +19,9 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
+import model.Configurazione;
 import controller.DatabaseDriver;
+import controller.Query;
 
 public class MyLoginModule implements LoginModule {
 
@@ -70,6 +75,8 @@ public class MyLoginModule implements LoginModule {
 			}
 			if (isValidUserSH()){
 				loginSucceeded = true;
+				//Il login ha avuto successo: il dispositivo va attivato
+				activateDevice(username);
 				return true;
 			}
 		} catch (IOException e) {
@@ -77,10 +84,36 @@ public class MyLoginModule implements LoginModule {
 		} catch (UnsupportedCallbackException e) {
 			e.printStackTrace();
 		}
-		//TODO settare a true il boolean del dispositivo che indica se è attivo
+		
 		return false;
 	}
+	
+	//TODO testare che attivi il dispositivo
+	private void activateDevice(String username){
+		DatabaseDriver driver= DatabaseDriver.getInstance();
+		PreparedStatement stmt = null;
+		String sql = "select D.id_dispositivo from dispositivo d, utente u where u.dispositivo=d.id_dispositivo AND u.username=?";
+		String sql2= "update dispositivo set attivo=TRUE where id_dispositivo=?";
+		driver.openConnection();
+		
+		try {
+			stmt = driver.getOpenedConnection().prepareStatement(sql);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
 
+			if (rs.next()) {
+				int id= rs.getInt("id_dispositivo");
+				stmt = driver.getOpenedConnection().prepareStatement(sql2);
+				stmt.setInt(1, id);
+				stmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		driver.closeConnection();
+	}
+
+	//Non usato. Può essere usato al posto di quello che cripta le password: isValidUserSH
 	private boolean isValidUser() {
 		boolean userExists;
 

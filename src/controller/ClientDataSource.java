@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
-import util.Configurazione;
-import util.Dispositivo;
-import util.User;
+import model.Configurazione;
+import model.Dispositivo;
+import model.User;
 
 /**
  * Questa classe mette a disposizione i metodi per effettuare interrogazioni
@@ -156,6 +156,10 @@ public class ClientDataSource implements Serializable {
 		return device;
 	}
 */
+	
+	/*
+	 * Restituisce la configurazione del dispositivo passato come parametro
+	 */
 	public Configurazione getConfigurazione(Dispositivo dispositivo) {
 		driver.openConnection();
 		Configurazione conf= driver.getConfigurazione(dispositivo);
@@ -163,6 +167,9 @@ public class ClientDataSource implements Serializable {
 		return conf;
 	}
 
+	/*
+	 * Restituisce lo User data bean con un certo username passato come parametro
+	 */
 	public User getUser(String utente) {
 		driver.openConnection();
 		User user= driver.getUser(utente);
@@ -170,6 +177,10 @@ public class ClientDataSource implements Serializable {
 		return user;
 	}
 
+	/*
+	 * Aggiorna i dati dell'user e la configurazione del suo dispositivo nel database
+	 * a seguito della modifica di alcuni parametri
+	 */
 	public void updateDbInstance(User client, Configurazione config) {
 		driver.openConnection();
 		driver.updateProfile(client);

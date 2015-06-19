@@ -7,8 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import util.Configurazione;
-import util.User;
+import model.Configurazione;
+import model.User;
 
 @ManagedBean
 @SessionScoped

@@ -1,4 +1,4 @@
-package util;
+package model;
 
 public class Dispositivo {
 
@@ -28,13 +28,5 @@ public class Dispositivo {
 	
 	public boolean isActive(){
 		return this.isActive;
-	}
-	
-	public void On(){
-		this.isActive=true;
-	}
-	
-	public void Off(){
-		this.isActive=false;
 	}
 }

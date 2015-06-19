@@ -1,4 +1,4 @@
-package util;
+package model;
 
 public class Configurazione {
 	
@@ -57,7 +57,7 @@ public class Configurazione {
 		this.speedAlarm = speed;
 	}
 	
-	//Customized
+	//Customized for our view
 	public String getFormattedFpos(){
 		int s, m, h;
 		h=this.fPos/3600;
@@ -89,15 +89,4 @@ public class Configurazione {
 		
 		this.fSms=s+m*60+h*3600;
 	}
-	
-/*
-	public void setAll(int fPos, int fSms, int speed, boolean smsEnabled,
-			boolean emailEnabled) {
-		this.setfPos(fPos);
-		this.setfSms(fSms);
-		this.setspeedAlarm(speed);
-		this.setSmsEnabled(smsEnabled);
-		this.setEmailEnabled(emailEnabled);		
-	}
-*/
 }

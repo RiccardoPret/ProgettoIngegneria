@@ -1,8 +1,7 @@
 query_checkUser=>select username from UserList where UserList.username=? and UserList.password=?
 query_role=>select UserGroup.ruolo from UserGroup where UserGroup.username=?
-query_getUserDevice=>select D.id_dispositivo, D.modello, D.attivo from Utente U, Dispositivo D where U.dispositivo=D.id_dispositivo AND U.username=?
-query_getConfig=>select * from configurazione where dispositivo=?
 query_getHash=>select password from userlist where username=?
+query_getConfig=>select * from configurazione where dispositivo=?
 query_getUser=>select * from utente where username=?
 query_getDevice=>select * from dispositivo where id_dispositivo=?
 update_profile=>update utente set mail=?, numTelefono=?, linkStreaming=? where username=?
