@@ -18,44 +18,54 @@
 		</ui:define>
 
 		<ui:define name="content">
-			<h2>Profilo</h2>
 			<h:form>
-				<h:panelGroup layout="block" id="info_utente">
+				<table>
+					<tr>
+						<td>Username</td>
+						<td><h:inputText id="username" value="#{gestioneUserBean.userFilter.username}" /></td>
+					</tr>
+					<tr>
+						<td>Id dispositivo</td>
+						<td><h:inputText id="iddevice" value="#{gestioneUserBean.userFilter.idDispositivo}" /></td>
+					</tr>
+					<tr>
+						<td>E-mail</td>
+						<td><h:inputText id="mail" value="#{gestioneUserBean.userFilter.email}" /></td>
+					</tr>
+					<tr>
+						<td>Telefono</td>
+						<td><h:inputText id="tel" value="#{gestioneUserBean.userFilter.telefono}" /></td>
+					</tr>
+				</table>
+				<p>
+					<h:commandButton value="Cerca">
+						<f:ajax execute="username iddevice mail tel" render="users" />
+					</h:commandButton>
+				</p>
+			</h:form>
 
-					<p:messages autoUpdate="true" />
-					<!-- tabella con informazioni admin -->
-					<table class="border_top">
-						<tr>
-							<th colspan="2">Informazioni Utente</th>
-						</tr>
-						<tr>
-							<td class="left"><strong>Ruolo</strong></td>
-							<td class="right">#{adminBean.admin.ruolo}</td>
-						</tr>
-						<tr>
-							<td class="left"><strong>Username</strong></td>
-							<td class="right">#{adminBean.admin.username}</td>
-						</tr>
-						<tr>
-							<td class="left"><strong>Nome</strong></td>
-							<td class="right">#{adminBean.admin.nome}</td>
-						</tr>
-						<tr>
-							<td class="left"><strong>Cognome</strong></td>
-							<td class="right">#{adminBean.admin.cognome}</td>
-						</tr>
-					</table>
-
-					<!-- tabella statistiche -->
-					<table class="border_top">
-						<tr>
-							<th colspan="2">Statistiche</th>
-						</tr>
-						<tr>
-							<td class="left"><strong>Dispositivi attivi/totali</strong></td>
-						</tr>
-					</table>
-
+			<h2>Profilo</h2>
+			<h:form id="users">
+				<h:panelGroup layout="block">
+					<h:dataTable value="#{gestioneUserBean.userList}" var="user">
+						<h:column>
+							<f:facet name="header">Username</f:facet>
+							<h:commandLink value="#{user.username}"
+								action="#{gestioneUserBean.recuperaUser( user.username )}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Id dispositivo</f:facet>
+                				#{user.dispositivo.id}
+              				</h:column>
+						<h:column>
+							<f:facet name="header">Email</f:facet>
+                				#{user.email}
+              				</h:column>
+						<h:column>
+							<f:facet name="header">Telefono</f:facet>
+                				#{user.telefono}
+              				</h:column>
+					</h:dataTable>
 					<ui:debug />
 				</h:panelGroup>
 			</h:form>

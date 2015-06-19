@@ -18,7 +18,7 @@ public class AdminBean implements Serializable{
 	
 	private DataSource ds;
 	private Admin admin;
-	
+		
 	public AdminBean() {
 		this.ds= new DataSource();
 	}
@@ -42,4 +42,5 @@ public class AdminBean implements Serializable{
 	public Admin getAdmin(){
 		return this.admin;
 	}
+	
 }

@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.UserFilter;
 import model.Admin;
-import model.PersonaleAzienda;
 import model.Configurazione;
 import model.Dispositivo;
 import model.User;
@@ -205,8 +205,7 @@ public class DatabaseDriver {
 	public User getUser(String username) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		User user = new User(username);
-		System.out.println(user.getUsername());
+		User user = null;
 		String sql = Query.getInstance().getQuery("query_getUser");
 
 		checkInstantiation();
@@ -215,14 +214,8 @@ public class DatabaseDriver {
 			stmt.setString(1, username);
 
 			rs = stmt.executeQuery();
-
-			// Se trova la stringa setta la sua roba
 			if (rs.next()) {
-				user.setDispositivo(getDispositivoFromId(rs
-						.getInt("dispositivo")));
-				user.setEmail(rs.getString("mail"));
-				user.setTelefono(rs.getString("numTelefono"));
-				user.setVideo(rs.getString("linkStreaming"));
+				user=getUserByResultSet(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -317,5 +310,70 @@ public class DatabaseDriver {
 			e.printStackTrace();
 		}
 		return admin;
+	}
+	
+	public List<User> getUsers(){
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		List<User> users = new ArrayList<User>();
+		String sql = Query.getInstance().getQuery("query_getUserList");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				users.add(getUserByResultSet(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	private User getUserByResultSet(ResultSet rs) {
+		User user= null;
+		try {
+			user=new User(rs.getString("username"));
+
+			user.setDispositivo(getDispositivoFromId(rs.getInt("dispositivo")));
+			user.setEmail(rs.getString("mail"));
+			user.setTelefono(rs.getString("numTelefono"));
+			user.setVideo(rs.getString("linkStreaming"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public List<User> getFilteredUsers(UserFilter filtro) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		List<User> users = new ArrayList<User>();
+		String sql = Query.getInstance().getQuery("query_getUserList")+" where TRUE=TRUE";
+		System.out.println("Inizio costruzione query");
+		if(!filtro.getUsername().isEmpty())
+			sql+=" AND username='"+filtro.getUsername()+"'";
+		if(filtro.getIdDispositivo()!=null)
+			sql+=" AND dispositivo="+filtro.getIdDispositivo();
+		if(!filtro.getEmail().isEmpty())
+			sql+=" AND mail='"+filtro.getEmail()+"'";
+		if(!filtro.getTelefono().isEmpty())
+			sql+=" AND numTelefono='"+filtro.getTelefono()+"'";
+		
+		System.out.println(sql);
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				users.add(getUserByResultSet(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 }
