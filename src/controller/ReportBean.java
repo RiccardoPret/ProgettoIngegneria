@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -50,5 +51,7 @@ public class ReportBean implements Serializable{
 		System.out.println(clientBean.getUser().getUsername());
 		return this.reportPosizioni;
 	}
-	
+	public Timestamp getTimestamp(){
+		return this.currentPosition.getTimestamp();
+	}
 }

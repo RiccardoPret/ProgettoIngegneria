@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.postgis.PGgeometry;
-
-import util.Coordinate;
-import util.UserFilter;
 import model.Admin;
 import model.Configurazione;
 import model.Dispositivo;
 import model.Posizione;
 import model.User;
+
+import org.postgresql.geometric.PGpoint;
+
+import util.UserFilter;
 
 /*
  * Classe che si occupa di interfacciare le query disponibili in modo semplice e leggibile
@@ -407,8 +407,7 @@ public class DatabaseDriver {
 		try {
 			pos=new Posizione(getDispositivoFromId(rs.getInt("dispositivo")));
 			pos.setTimestamp(rs.getTimestamp(2));
-			pos.setCoordinate((PGgeometry)rs.getObject("coordinate"));
-			System.out.println(pos.getCoordinate().getValue());
+			pos.setCoordinate((PGpoint)rs.getObject("coordinate"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

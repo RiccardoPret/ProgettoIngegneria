@@ -18,8 +18,25 @@
 			<ui:include src="/client/sidebar_cliente.jsf" />
 		</ui:define>
 		<ui:define name="content">
+		<h2>Profilo</h2>
 			<h:form id="users">
-				<h:outputText id="out" value="#{reportBean.lastPositions}" />
+				<h:panelGroup layout="block">
+					<h:dataTable value="#{reportBean.lastPositions}" var="pos">
+						<h:column>
+							<f:facet name="header">Latitude</f:facet>
+                				#{pos.x}
+              				</h:column>
+						<h:column>
+							<f:facet name="header">Longitude</f:facet>
+                				#{pos.y}
+              				</h:column>
+						<h:column>
+							<f:facet name="header">Data</f:facet>
+                				#{pos.timestamp}
+              				</h:column>
+					</h:dataTable>
+					<ui:debug />
+				</h:panelGroup>
 			</h:form>
 		</ui:define>
 	</ui:composition>
