@@ -8,34 +8,20 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-	<h:head>Client Page</h:head>
-	<h:body>
-		<ui:composition template="/templates/layout.jsf">
-			<ui:define name="windowTitle">
+<h:head>Client Page</h:head>
+<h:body>
+	<ui:composition template="/templates/layout.jsf">
+		<ui:define name="windowTitle">
 	   			 Home cliente
 	  		</ui:define>
-	  		<ui:define name="sidebar">
-	  			<ui:include src="/client/sidebar_cliente.jsf" />
-	  		</ui:define>
-	  		
-			<ui:define name="content">
-				<p>Bentornato</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
-				
-				<p>Mappa delle posizioni di oggi:</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
-				
-				<p>A sinistra selettore degli ultimi 10 giorni:</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
-				
-				<p>A destra le ultime 12 foto scattate (4 file da 3 di thumbnail)</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
-				
-				<h:form>
-					<h:commandButton action="#{securityBacking.logout}" value="Logout" />
-				</h:form>
-				
-			</ui:define>
-		</ui:composition>	
-	</h:body>
+		<ui:define name="sidebar">
+			<ui:include src="/client/sidebar_cliente.jsf" />
+		</ui:define>
+		<ui:define name="content">
+			<h:form id="users">
+				<h:outputText id="out" value="#{reportBean.lastPositions}" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
 </html>

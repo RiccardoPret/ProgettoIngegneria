@@ -6,6 +6,7 @@ import java.util.List;
 import model.Admin;
 import model.Configurazione;
 import model.Dispositivo;
+import model.Posizione;
 import model.User;
 import util.UserFilter;
 
@@ -69,6 +70,17 @@ public class DataSource implements Serializable {
 		users=filtro.isSetted()?driver.getFilteredUsers(filtro):driver.getUsers();
 		driver.closeConnection();
 		return users;
+	}
+
+	/*
+	 * Ritorna le posizioni del dispositivo passato come parametro
+	 */
+	public List<Posizione> getPosizioni(Dispositivo dispositivo) {
+		List<Posizione> posizioni=null;
+		driver.openConnection();
+		posizioni=driver.getPosizioni(dispositivo.getId());
+		driver.closeConnection();
+		return posizioni;
 	}
 
 }

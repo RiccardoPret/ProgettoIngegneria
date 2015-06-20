@@ -9,10 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.postgis.PGgeometry;
+
+import util.Coordinate;
 import util.UserFilter;
 import model.Admin;
 import model.Configurazione;
 import model.Dispositivo;
+import model.Posizione;
 import model.User;
 
 /*
@@ -376,4 +380,39 @@ public class DatabaseDriver {
 		}
 		return users;
 	}
+
+	public List<Posizione> getPosizioni(Integer id) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		List<Posizione> posizioni = new ArrayList<Posizione>();
+		String sql = Query.getInstance().getQuery("query_getPosizioni");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				posizioni.add(getPosizioneByResultSet(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return posizioni;
+	}
+
+	private Posizione getPosizioneByResultSet(ResultSet rs) {
+		Posizione pos= null;
+		try {
+			pos=new Posizione(getDispositivoFromId(rs.getInt("dispositivo")));
+			pos.setTimestamp(rs.getTimestamp(2));
+			pos.setCoordinate((PGgeometry)rs.getObject("coordinate"));
+			System.out.println(pos.getCoordinate().getValue());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pos;
+	}
+
 }

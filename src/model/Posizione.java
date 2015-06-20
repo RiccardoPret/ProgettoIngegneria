@@ -2,12 +2,12 @@ package model;
 
 import java.sql.Timestamp;
 
-import util.Coordinate;
+import org.postgis.PGgeometry;
 
 
 public class Posizione {
 	Dispositivo dispositivo;
-	Coordinate coordinate;
+	PGgeometry coordinate;
 	Timestamp timestamp;
 	
 	public Posizione(Dispositivo device){
@@ -17,10 +17,10 @@ public class Posizione {
 	public Dispositivo getDispositivo() {
 		return dispositivo;
 	}
-	public Coordinate getCoordinate() {
+	public PGgeometry getCoordinate() {
 		return coordinate;
 	}
-	public void setCoordinate(Coordinate coordinate) {
+	public void setCoordinate(PGgeometry coordinate) {
 		this.coordinate = coordinate;
 	}
 	public Timestamp getTimestamp() {
