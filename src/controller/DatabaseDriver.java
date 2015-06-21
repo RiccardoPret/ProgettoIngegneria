@@ -16,7 +16,6 @@ import model.Posizione;
 import model.User;
 
 import org.postgresql.geometric.PGpoint;
-
 import util.UserFilter;
 
 /*
@@ -227,7 +226,7 @@ public class DatabaseDriver {
 		return user;
 	}
 
-	private Dispositivo getDispositivoFromId(int id) {
+	public Dispositivo getDispositivoFromId(int id) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		Dispositivo device = null;
@@ -412,6 +411,47 @@ public class DatabaseDriver {
 			e.printStackTrace();
 		}
 		return pos;
+	}
+	
+	public String[] getIpPort(int id) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		String res[]=new String[2];
+		String sql = Query.getInstance().getQuery("query_getIpPort");
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+		rs = stmt.executeQuery();
+		if (rs.next()) {
+			res[0]=rs.getString("ip");
+			res[1]=Integer.toString(rs.getInt("porta"));
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return res;
+}
+
+	
+	public boolean insertPosizione(Posizione posizione) {
+		PreparedStatement stmt = null;
+		String sql = Query.getInstance().getQuery("insert_posizione");
+
+		checkInstantiation();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, posizione.getDispositivo().getId());
+			stmt.setTimestamp(2, posizione.getTimestamp());
+			stmt.setObject(3, posizione.getCoordinate());
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;			
 	}
 
 }

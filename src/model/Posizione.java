@@ -34,6 +34,5 @@ public class Posizione {
 	}
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
-	}
-	
+	}	
 }

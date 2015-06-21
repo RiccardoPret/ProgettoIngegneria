@@ -24,7 +24,7 @@ public class ConfigSocket implements Runnable {
 
 		while (active) {
 			try {
-				new Thread(new sendConfigSocket(configPort.accept())).start();
+				new Thread(new ThreadInvioConfigurazione(configPort.accept())).start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

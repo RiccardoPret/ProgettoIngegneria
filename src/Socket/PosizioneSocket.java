@@ -3,14 +3,14 @@ package Socket;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class RilevazioneSocket implements Runnable {
+public class PosizioneSocket implements Runnable {
 
 	boolean active = false;
-	ServerSocket rilPort;
+	ServerSocket socketInsPosizione;
 	
-	public void ConfigSocket(){
+	public PosizioneSocket(){
 		try {
-			rilPort=new ServerSocket(4001);
+			socketInsPosizione=new ServerSocket(4001);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -20,16 +20,16 @@ public class RilevazioneSocket implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		/*
+		
 		while (active) {
 			try {
-				new Thread(new insertRileSocket(rilPort.accept()));
+				new Thread(new ThreadInsPosizione(socketInsPosizione.accept())).start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
-*/
+
 	}
 }

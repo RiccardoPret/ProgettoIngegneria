@@ -15,6 +15,6 @@ public class Gestore_connessioniUscita {
 	}
 	
 	public void updateConfig(int id_dispositivo){
-		new Thread(new updateConfigSocket(id_dispositivo)).start();	
+		new Thread(new ThredAggConfigurazione(id_dispositivo)).start();	
 	}
 }

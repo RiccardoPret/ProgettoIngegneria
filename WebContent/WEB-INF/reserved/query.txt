@@ -10,3 +10,4 @@ query_getIpPort=>SELECT ip, porta FROM portadisp where dispositivo=?
 query_getPosizioni=>select * from posizione where dispositivo=?
 update_profile=>update utente set mail=?, numTelefono=?, linkStreaming=? where username=?
 update_setting=>update configurazione set freq_ril=?, freq_mex=?, limiteVelocita=?, messaggi=?, mail=? where dispositivo=?
+insert_posizione=>INSERT INTO posizione (dispositivo, data, coordinate) VALUES (?, ?, ?)

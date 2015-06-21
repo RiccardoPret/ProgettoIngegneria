@@ -8,11 +8,20 @@ import java.net.Socket;
 
 import controller.DatabaseDriver;
 
-public class updateConfigSocket implements Runnable {
+public class ThredAggConfigurazione implements Runnable {
 
+/*
+ * questa classe invia un messaggio al dispositivo con id passato nel costruttore 
+ * per dirgli di aggiornare la sua configurazione.
+ * il dispositivo in seguito alla richiesta si connetterà alla porta 4000 
+ * e farà la richiesta per la nuova configurazione
+ * 
+ * */
+	
+	
 	int id;
 	String res[];
-	public updateConfigSocket(int id_dispositivo) {
+	public ThredAggConfigurazione(int id_dispositivo) {
 		// TODO Auto-generated constructor stub
 		this.id=id_dispositivo;
 		DatabaseDriver dd=DatabaseDriver.getInstance();

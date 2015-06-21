@@ -3,13 +3,13 @@ package Socket;
 public class Gestore_connessioniEntrata {
 
 	public static Gestore_connessioniEntrata instance = null;
-	private ConfigSocket config; // socket per ricevere la richiesta di mandare la configurazione
-	private RilevazioneSocket rilevazioni; // socket per ricevere rilevazioni
+	private ConfigSocket socketAggConfig; // socket per ricevere la richiesta di mandare la configurazione
+	private PosizioneSocket socketInsPosizioni; // socket per ricevere socketInsPosizioni
 	
 
 	private Gestore_connessioniEntrata() {
-		 config=new ConfigSocket();
-		 rilevazioni=new RilevazioneSocket();
+		 socketAggConfig=new ConfigSocket();
+		 socketInsPosizioni=new PosizioneSocket();
 	}
 
 	public static Gestore_connessioniEntrata getInstance() {
@@ -20,29 +20,29 @@ public class Gestore_connessioniEntrata {
 	}
 	
 	public void startConfigSocket(){
-		config.active=true;
-		new Thread(config).start();
+		socketAggConfig.active=true;
+		new Thread(socketAggConfig).start();
 	}
 	
-	public void startRilevazioniSocket(){
-		rilevazioni.active=true;
-		new Thread(rilevazioni).start();
+	public void startSocketInsPosizione(){
+		socketInsPosizioni.active=true;
+		new Thread(socketInsPosizioni).start();
 	}
 	public void startAllSocket(){
 		startConfigSocket();
-		startRilevazioniSocket();
+		startSocketInsPosizione();
 	}
 	
 	public void stopConfigSocket(){
-		config.active=false;
+		socketAggConfig.active=false;
 	}
 	
 	public void stopRilevazioniSocket(){
-		rilevazioni.active=false;
+		socketInsPosizioni.active=false;
 	}
 	
 	public void stopAllSocket(){
-		rilevazioni.active=false;
-		config.active=false;
+		socketInsPosizioni.active=false;
+		socketAggConfig.active=false;
 	}
 }

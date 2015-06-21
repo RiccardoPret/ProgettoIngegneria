@@ -11,13 +11,13 @@ import controller.DatabaseDriver;
 import model.Configurazione;
 import model.Dispositivo;
 
-public class sendConfigSocket implements Runnable {
+public class ThreadInvioConfigurazione implements Runnable {
 Socket socket;
 Configurazione conf;
 int id_disp;
 DatabaseDriver dd= DatabaseDriver.getInstance();
 
- public sendConfigSocket(Socket socket) {
+ public ThreadInvioConfigurazione(Socket socket) {
 	// TODO Auto-generated constructor stub
 	 this.socket=socket;
 }
