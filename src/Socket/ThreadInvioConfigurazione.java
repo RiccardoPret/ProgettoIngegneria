@@ -37,6 +37,7 @@ DatabaseDriver dd= DatabaseDriver.getInstance();
 		          conf=dd.getConfigurazione(new Dispositivo(id_disp));
 		          dd.closeConnection();
 		 
+		          System.out.println(conf.getfPos());
 		          out.write(conf.getfPos()+"\n");
 		          out.write(conf.getfSms()+"\n");
 		          out.write(conf.getspeedAlarm()+"\n");

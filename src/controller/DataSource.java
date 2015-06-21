@@ -82,5 +82,16 @@ public class DataSource implements Serializable {
 		driver.closeConnection();
 		return posizioni;
 	}
+	
+	/*
+	 * ritorna la ultima posizione del dispositivo passato come parametro
+	 * */
+	public Posizione getUltimaPosizione(Dispositivo dispositivo){
+		Posizione posizione=null;
+		driver.openConnection();
+		posizione=driver.getUltimaPosizione(dispositivo.getId());
+		driver.closeConnection();
+		return posizione;
+	}
 
 }

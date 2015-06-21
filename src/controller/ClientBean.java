@@ -3,9 +3,11 @@ package controller;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import Socket.Gestore_connessioniUscita;
 import model.Configurazione;
@@ -55,5 +57,7 @@ public class ClientBean implements Serializable {
 	public void updateDb(){
 		ds.updateDbInstance(this.client, this.config);
 		Gestore_connessioniUscita.getInstance().updateConfig(client.getDispositivo().getId());
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Valori aggiornati"));
+		   
 	}
 }

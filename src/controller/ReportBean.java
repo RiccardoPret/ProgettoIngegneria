@@ -37,7 +37,10 @@ public class ReportBean implements Serializable{
 	
 	@PostConstruct
 	public void init(){
+		currentPosition=null;
+		reportPosizioni=null;
 		posizioniUtente();
+		if(!reportPosizioni.isEmpty())
 		setCurrentIndex(0);
 	}
 	
@@ -94,4 +97,7 @@ public class ReportBean implements Serializable{
         setCurrentIndex(event.getValue());
     } 
 
+    public boolean hasPositions(){
+    	return !reportPosizioni.isEmpty();
+    }
 }

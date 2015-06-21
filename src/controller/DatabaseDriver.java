@@ -16,6 +16,7 @@ import model.Posizione;
 import model.User;
 
 import org.postgresql.geometric.PGpoint;
+
 import util.UserFilter;
 
 /*
@@ -452,6 +453,30 @@ public class DatabaseDriver {
 			e.printStackTrace();
 		}
 		return false;			
+	}
+
+	public Posizione getUltimaPosizione(Integer id) {
+			ResultSet rs = null;
+			PreparedStatement stmt = null;
+			Posizione posizione = null;
+			String sql = Query.getInstance().getQuery("query_getPosizioni");
+
+			checkInstantiation();
+			try {
+				stmt = connection.prepareStatement(sql);
+				stmt.setInt(1, id);
+				rs = stmt.executeQuery();
+
+				if (rs.next()) {
+					posizione=new Posizione(getDispositivoFromId(id));
+					posizione.setTimestamp(rs.getTimestamp(2));
+					posizione.setCoordinate((PGpoint) rs.getObject(3));					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return posizione;
+		
 	}
 
 }

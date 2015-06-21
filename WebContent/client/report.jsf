@@ -13,11 +13,11 @@
 	<ui:composition template="/templates/layout.jsf">
 
 		<ui:define name="head">
-				
-				<script src="http://maps.google.com/maps/api/js?sensor=true|false"
-type="text/javascript"></script>
- 
-</ui:define>
+
+			<script src="http://maps.google.com/maps/api/js?sensor=true|false"
+				type="text/javascript"></script>
+
+		</ui:define>
 		<ui:define name="windowTitle">
 	   			 Home cliente
 	  		</ui:define>
@@ -25,38 +25,48 @@ type="text/javascript"></script>
 			<ui:include src="/client/sidebar_cliente.jsf" />
 		</ui:define>
 		<ui:define name="content">
-		<h2>Profilo</h2>
-			<h:panelGroup layout="block" id="map">
-				<p:gmap center="#{reportBean.currentPosition.y}, #{reportBean.currentPosition.x}" zoom="15" type="hybrid" model="#{reportBean.model}" style="height:500px"/>
-			</h:panelGroup>
-			<h:form id="users">
-				
-				<h:panelGrid columns="1" style="margin-bottom: 10px">
-       			<p:inputText id="posizioneScelta" value="#{reportBean.currentIndex}" />
-        		<p:slider for="posizioneScelta" minValue="0" maxValue="#{reportBean.numeroReport}">
-        			<p:ajax event="slideEnd" listener="#{reportBean.onSlideEnd}" update="map" />
-        		</p:slider>
-    		</h:panelGrid>
-				<h:panelGroup layout="block">
-					<h:dataTable value="#{reportBean.lastPositions}" var="pos">
-						<h:column>
-							<f:facet name="header">Latitude</f:facet>
+			<h2>Report Posizioni</h2>
+			<h:panelGroup layout="block" rendered="#{reportBean.hasPositions()}">
+				<h:panelGroup layout="block" id="map">
+					<p:gmap
+						center="#{reportBean.currentPosition.y}, #{reportBean.currentPosition.x}"
+						zoom="15" type="hybrid" model="#{reportBean.model}"
+						style="height:500px" />
+				</h:panelGroup>
+				<h:form id="users">
+					<h:panelGrid columns="1" style="margin-bottom: 10px">
+						<p:inputText id="posizioneScelta"
+							value="#{reportBean.currentIndex}" />
+						<p:slider for="posizioneScelta" minValue="0"
+							maxValue="#{reportBean.numeroReport}">
+							<p:ajax event="slideEnd" listener="#{reportBean.onSlideEnd}"
+								update="map" />
+						</p:slider>
+					</h:panelGrid>
+					<h:panelGroup layout="block">
+						<h:dataTable value="#{reportBean.lastPositions}" var="pos">
+							<h:column>
+								<f:facet name="header">Latitude</f:facet>
                 				#{pos.x}
               				</h:column>
-						<h:column>
-							<f:facet name="header">Longitude</f:facet>
+							<h:column>
+								<f:facet name="header">Longitude</f:facet>
                 				#{pos.y}
               				</h:column>
-						<h:column>
-							<f:facet name="header">Data</f:facet>
+							<h:column>
+								<f:facet name="header">Data</f:facet>
                 				#{pos.timestamp}
               				</h:column>
-					</h:dataTable>
-					<ui:debug />
-				</h:panelGroup>
-			</h:form>
+						</h:dataTable>
+						<ui:debug />
+					</h:panelGroup>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup layout="block" rendered="#{!reportBean.hasPositions()}">
+				non ci sono rilevazioni
+			</h:panelGroup>
 		</ui:define>
-	
+
 
 
 	</ui:composition>

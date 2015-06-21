@@ -11,7 +11,7 @@
 </head>
 <body>
 	<ui:composition>
-		<h1 id="logo"><a href="#">#{msgs.name}</a></h1>
+		<h1 id="logo"><h:link outcome="/client/index.jsf">#{msgs.name}</h:link></h1>
 		<h:form>
 		<ui:param name="view" value="#{facesContext.viewRoot.viewId}" />
 			<nav id="nav">
