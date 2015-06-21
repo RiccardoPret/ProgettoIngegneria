@@ -20,16 +20,16 @@
 	  		
 			<ui:define name="content">
 				<p>Bentornato</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<h:outputText id="out1" value="#{securityBacking.welcome}"/>
 				
 				<p>Mappa con posizioni in costante aggiornamento:</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<h:outputText id="out2" value="#{securityBacking.welcome}"/>
 				
 				<p>A sinistra lo straming video da far partire quando si vuole (frame di youtube con il tasto play):</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<h:outputText id="out3" value="#{securityBacking.welcome}"/>
 				
 				<p>A destra il tasto scatta foto. Dopo averlo premuto si visualizzerà la foto scattata sotto al bottone</p>
-				<h:outputText id="out" value="#{securityBacking.welcome}"/>
+				<h:outputText id="out4" value="#{securityBacking.welcome}"/>
 				
 				<h:form>
 					<h:commandButton action="#{securityBacking.logout}" value="Logout" />

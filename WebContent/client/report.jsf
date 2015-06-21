@@ -11,6 +11,13 @@
 <h:head>Client Page</h:head>
 <h:body>
 	<ui:composition template="/templates/layout.jsf">
+
+		<ui:define name="head">
+				
+				<script src="http://maps.google.com/maps/api/js?sensor=true|false"
+type="text/javascript"></script>
+ 
+</ui:define>
 		<ui:define name="windowTitle">
 	   			 Home cliente
 	  		</ui:define>
@@ -19,7 +26,17 @@
 		</ui:define>
 		<ui:define name="content">
 		<h2>Profilo</h2>
+			<h:panelGroup layout="block" id="map">
+				<p:gmap center="#{reportBean.currentPosition.y}, #{reportBean.currentPosition.x}" zoom="15" type="hybrid" model="#{reportBean.model}" style="height:500px"/>
+			</h:panelGroup>
 			<h:form id="users">
+				
+				<h:panelGrid columns="1" style="margin-bottom: 10px">
+       			<p:inputText id="posizioneScelta" value="#{reportBean.currentIndex}" />
+        		<p:slider for="posizioneScelta" minValue="0" maxValue="#{reportBean.numeroReport}">
+        			<p:ajax event="slideEnd" listener="#{reportBean.onSlideEnd}" update="map" />
+        		</p:slider>
+    		</h:panelGrid>
 				<h:panelGroup layout="block">
 					<h:dataTable value="#{reportBean.lastPositions}" var="pos">
 						<h:column>
@@ -39,6 +56,9 @@
 				</h:panelGroup>
 			</h:form>
 		</ui:define>
+	
+
+
 	</ui:composition>
 </h:body>
 </html>

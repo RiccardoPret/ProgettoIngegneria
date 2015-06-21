@@ -12,6 +12,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<h:outputStylesheet library="css" name="main.css" />
+		<ui:insert name ="head"/>
 	</h:head>
 
 	<h:body>
@@ -27,10 +28,14 @@
 			<div id="sidebar">
 					<ui:insert name="sidebar"/>							
 			</div>
+		<!--	
 		<h:outputScript library="js" name="jquery.min.js" />
+		-->
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
 		<h:outputScript library="js" name="skel.min.js" />
 		<h:outputScript library="js" name="util.js" />
 		<h:outputScript library="js" name="main.js" />
+		
 		<ui:debug />
 	</h:body>
 </html>

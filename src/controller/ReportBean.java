@@ -8,11 +8,18 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+
+import org.primefaces.event.SlideEndEvent;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.Marker;
 
 import model.Posizione;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ReportBean implements Serializable{
 	
 	@ManagedProperty(value="#{clientBean}")
@@ -20,7 +27,9 @@ public class ReportBean implements Serializable{
 	
 	DataSource ds;
 	Posizione currentPosition;
+	int currentIndex;
 	List<Posizione> reportPosizioni;
+	private MapModel model;
 	
 	public ReportBean(){
 		ds= new DataSource();
@@ -29,6 +38,7 @@ public class ReportBean implements Serializable{
 	@PostConstruct
 	public void init(){
 		posizioniUtente();
+		setCurrentIndex(0);
 	}
 	
 	public ClientBean getClientBean(){
@@ -54,4 +64,34 @@ public class ReportBean implements Serializable{
 	public Timestamp getTimestamp(){
 		return this.currentPosition.getTimestamp();
 	}
+	
+	
+	public int getNumeroReport(){
+		return this.reportPosizioni.size()-1;
+	}
+
+	public int getCurrentIndex() {
+		return currentIndex;
+	}
+
+	public void setCurrentIndex(int currentIndex) {
+		System.out.println(currentIndex);
+		this.currentIndex = currentIndex;
+		currentPosition=reportPosizioni.get(currentIndex);
+		updateModel();
+	}
+	
+	public void updateModel(){
+		model = new DefaultMapModel();
+		model.addOverlay(new Marker(new LatLng(currentPosition.getY(),currentPosition.getX())));
+	}
+	
+	public MapModel getModel(){
+		return model;
+	}
+    public void onSlideEnd(SlideEndEvent event) {
+      //  FacesMessage message = new FacesMessage("Slide Ended", "Value: " + event.getValue());
+        setCurrentIndex(event.getValue());
+    } 
+
 }
