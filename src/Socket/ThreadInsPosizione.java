@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import org.postgresql.geometric.PGpoint;
 
 import controller.DatabaseDriver;
+import controller.DatabaseDriverC3P0;
 import model.Dispositivo;
 import model.Posizione;
 
@@ -18,12 +19,12 @@ public class ThreadInsPosizione implements Runnable {
 	Dispositivo dis;
 	int id_disp;
 	Posizione posizione;
-	DatabaseDriver dd;
+	DatabaseDriverC3P0 dd;
 
 	 public ThreadInsPosizione(Socket accept) {
 		// TODO Auto-generated constructor stub
 		 this.socket=accept;
-		 dd=DatabaseDriver.getInstance();
+		 dd=DatabaseDriverC3P0.getInstance();
 	}
 
 	public void sendConfigSocket(Socket socket) {
@@ -41,7 +42,7 @@ public class ThreadInsPosizione implements Runnable {
 			          String inputLine, outputLine;
 			          while( !in.ready()){}
 			          id_disp=Integer.parseInt((in.readLine()));
-			          dd.openConnection();
+			          //dd.openConnection();
 			          dis=dd.getDispositivoFromId(id_disp);
 			          posizione=new Posizione(dis);
 			          PGpoint coord=new PGpoint(Double.parseDouble(in.readLine()), Double.parseDouble(in.readLine()));
@@ -49,7 +50,7 @@ public class ThreadInsPosizione implements Runnable {
 			          posizione.setCoordinate(coord);
 			          posizione.setTimestamp(time);
 			          dd.insertPosizione(posizione);
-			          dd.closeConnection();
+			        //  dd.closeConnection();
 			          socket.close();
 			        } catch (IOException e) {
 			            e.printStackTrace();

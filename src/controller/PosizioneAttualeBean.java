@@ -42,6 +42,7 @@ public class PosizioneAttualeBean {
 	public void init(){
 		client=clientBean.getUser();
 		config=clientBean.getConfigurazione();
+		freqPosOriginale=config.getfPos();
 		dis=client.getDispositivo();
 		aggiornaPos();
 	}
@@ -53,6 +54,7 @@ public class PosizioneAttualeBean {
 	}
 	
 	public void startRealTime(){
+		System.out.println("cambio freq pos");
 		this.config.setfPos(2);
 		ds.updateDbInstance(this.client, this.config);
 		Gestore_connessioniUscita.getInstance().updateConfig(client.getDispositivo().getId());

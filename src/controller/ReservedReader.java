@@ -26,7 +26,7 @@ public class ReservedReader {
 	}
 
 	public ReservedReader(Object obj, String fileName, String separator) {
-		this.startingPointClass=obj;
+		this.startingPointClass=this;
 		this.fileName=fileName;
 		this.separator = separator;
 		

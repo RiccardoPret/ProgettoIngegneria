@@ -18,10 +18,10 @@
 		</ui:define>
 
 		<ui:define name="content">
-			<header>
-			<h2>Profilo</h2>
-			</header>
 			<h:form>
+				<header>
+					<h2>Profilo</h2>
+				</header>
 				<h:panelGroup layout="block" id="info_utente">
 
 					<p:messages autoUpdate="true" />
@@ -101,7 +101,6 @@
 					<p:commandButton value="Salva"
 						actionListener="#{clientBean.updateDb}" update="info_utente" />
 					<p:commandButton value="Cancel" update="info_utente" type="reset" />
-					<ui:debug />
 				</h:panelGroup>
 			</h:form>
 		</ui:define>

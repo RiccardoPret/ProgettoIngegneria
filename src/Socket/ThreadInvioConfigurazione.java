@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import controller.DatabaseDriver;
+import controller.DatabaseDriverC3P0;
 import model.Configurazione;
 import model.Dispositivo;
 
@@ -15,7 +16,7 @@ public class ThreadInvioConfigurazione implements Runnable {
 Socket socket;
 Configurazione conf;
 int id_disp;
-DatabaseDriver dd= DatabaseDriver.getInstance();
+DatabaseDriverC3P0 dd= DatabaseDriverC3P0.getInstance();
 
  public ThreadInvioConfigurazione(Socket socket) {
 	// TODO Auto-generated constructor stub
@@ -33,9 +34,9 @@ DatabaseDriver dd= DatabaseDriver.getInstance();
 		          while( !in.ready()){}
 		          id_disp=Integer.parseInt((in.readLine()));
 		          System.out.println("id_ricevuto:"+id_disp);
-		          dd.openConnection();
+		    //      dd.openConnection();
 		          conf=dd.getConfigurazione(new Dispositivo(id_disp));
-		          dd.closeConnection();
+		     //     dd.closeConnection();
 		 
 		          System.out.println(conf.getfPos());
 		          out.write(conf.getfPos()+"\n");

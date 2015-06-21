@@ -34,8 +34,9 @@
 						<p:poll interval="2" listener="#{posizioneAttualeBean.aggiornaPos}" update="map" />
 					</h:panelGroup>
 				</h:form>
-				<h:commandButton action="#{posizioneAttualeBean.startRealTime()}" value="start" />
-				<h:commandButton action="#{posizioneAttualeBean.startRealTime()}" value="stop" />
+				<p:commandButton value="start realtime" id="start" actionListener="#{posizioneAttualeBean.startRealTime}" />
+				<p:commandButton value="stop realtime" id="stop" actionListener="#{posizioneAttualeBean.stopRealTime}" />
+
 
 
 				<p>Bentornato</p>

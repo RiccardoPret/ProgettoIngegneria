@@ -3,7 +3,6 @@ package controller;
 import java.io.Serializable;
 import java.util.List;
 
-
 import model.Admin;
 import model.Configurazione;
 import model.Dispositivo;
@@ -15,20 +14,22 @@ import util.UserFilter;
  * Questa classe mette a disposizione i metodi per effettuare interrogazioni
  * sulla base di dati, sfruttabile dai bean
  */
-public class DataSource implements Serializable {
+public class CopyOfDataSource implements Serializable {
 
-	private DatabaseDriverC3P0 driver;
+	private DatabaseDriver driver;
 
 
-	public DataSource() {
-		driver = DatabaseDriverC3P0.getInstance();
+	public CopyOfDataSource() {
+		driver = DatabaseDriver.getInstance();
 	}
 	
 	/*
 	 * Restituisce la configurazione del dispositivo passato come parametro
 	 */
 	public Configurazione getConfigurazione(Dispositivo dispositivo) {
+		driver.openConnection();
 		Configurazione conf= driver.getConfigurazione(dispositivo);
+		driver.closeConnection();
 		return conf;
 	}
 
@@ -36,12 +37,16 @@ public class DataSource implements Serializable {
 	 * Restituisce lo User data bean con un certo username passato come parametro
 	 */
 	public User getUser(String utente) {
+		driver.openConnection();
 		User user= driver.getUser(utente);
+		driver.closeConnection();
 		return user;
 	}
 	
 	public Admin getAdmin(String username) {
+		driver.openConnection();
 		Admin admin= driver.getAdmin(username);
+		driver.closeConnection();
 		return admin;
 	}
 
@@ -50,8 +55,10 @@ public class DataSource implements Serializable {
 	 * a seguito della modifica di alcuni parametri
 	 */
 	public void updateDbInstance(User client, Configurazione config) {
+		driver.openConnection();
 		driver.updateProfile(client);
 		driver.updateSetting(config);
+		driver.closeConnection();
 	}
 
 	/*
@@ -59,7 +66,9 @@ public class DataSource implements Serializable {
 	 */
 	public List<User> getUsers(UserFilter filtro) {
 		List<User> users=null;
+		driver.openConnection();
 		users=filtro.isSetted()?driver.getFilteredUsers(filtro):driver.getUsers();
+		driver.closeConnection();
 		return users;
 	}
 
@@ -68,7 +77,9 @@ public class DataSource implements Serializable {
 	 */
 	public List<Posizione> getPosizioni(Dispositivo dispositivo) {
 		List<Posizione> posizioni=null;
+		driver.openConnection();
 		posizioni=driver.getPosizioni(dispositivo.getId());
+		driver.closeConnection();
 		return posizioni;
 	}
 	
@@ -77,7 +88,9 @@ public class DataSource implements Serializable {
 	 * */
 	public Posizione getUltimaPosizione(Dispositivo dispositivo){
 		Posizione posizione=null;
+		driver.openConnection();
 		posizione=driver.getUltimaPosizione(dispositivo.getId());
+		driver.closeConnection();
 		return posizione;
 	}
 

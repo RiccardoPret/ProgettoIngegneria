@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import controller.DatabaseDriver;
+import controller.DatabaseDriverC3P0;
 
 public class ThredAggConfigurazione implements Runnable {
 
@@ -24,10 +25,10 @@ public class ThredAggConfigurazione implements Runnable {
 	public ThredAggConfigurazione(int id_dispositivo) {
 		// TODO Auto-generated constructor stub
 		this.id=id_dispositivo;
-		DatabaseDriver dd=DatabaseDriver.getInstance();
-		dd.openConnection();
+		DatabaseDriverC3P0 dd=DatabaseDriverC3P0.getInstance();
+	//	dd.openConnection();
 		res=dd.getIpPort(id);
-		dd.closeConnection();
+	//	dd.closeConnection();
 	}
 
 	@Override

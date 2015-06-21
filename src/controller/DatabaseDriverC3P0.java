@@ -1,5 +1,6 @@
 package controller;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -17,15 +18,17 @@ import model.User;
 
 import org.postgresql.geometric.PGpoint;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import util.UserFilter;
 
 /*
  * Classe che si occupa di interfacciare le query disponibili in modo semplice e leggibile
  */
 
-public class DatabaseDriver {
-	private static DatabaseDriver instance;
-	private Connection connection;
+public class DatabaseDriverC3P0 {
+	private static DatabaseDriverC3P0 instance;
+	ComboPooledDataSource cpds;
 
 	private static ReservedReader DBCredential; // Evito le credenziali
 												// hard-coded. Esse sono in un
@@ -33,21 +36,34 @@ public class DatabaseDriver {
 	private static String dbFile = "credential_DBMS.txt";
 	private static String separator = "=>";
 
-	private DatabaseDriver() {
+	private DatabaseDriverC3P0() {
 		super();
+		 cpds = new ComboPooledDataSource(); 
+		 try {
+			cpds.setDriverClass(DBCredential.getValue("driver"));
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //loads the jdbc driver 
+		 cpds.setJdbcUrl(DBCredential.getValue("url")); 
+		 cpds.setUser(DBCredential.getValue("username")); 
+		 cpds.setPassword(DBCredential.getValue("password")); 
+		 // the settings below are optional -- c3p0 can work with defaults 
+		 cpds.setMinPoolSize(5); 
+		 cpds.setAcquireIncrement(5); 
+		 cpds.setMaxPoolSize(20);
+		
 	}
 
-	public static DatabaseDriver getInstance() {
+	public static DatabaseDriverC3P0 getInstance() {
 		if (instance == null) {
-			instance = new DatabaseDriver();
 			DBCredential = new ReservedReader(instance, dbFile, separator);
+			instance = new DatabaseDriverC3P0();
 
 			System.out.println(DBCredential.getValue("driver"));
 			System.out.println(DBCredential.getValue("url"));
 			System.out.println(DBCredential.getValue("username"));
-			System.out.println(DBCredential.getValue("password"));
-			
-
+			System.out.println(DBCredential.getValue("password"));						
 		}
 		return instance;
 	}
@@ -56,7 +72,7 @@ public class DatabaseDriver {
 		if (instance == null) {
 			System.out
 					.println("Non aprire connessioni senza prima avere istanziato l'oggetto!");
-			instance = new DatabaseDriver();
+			instance = new DatabaseDriverC3P0();
 		}
 	}
 
@@ -65,52 +81,14 @@ public class DatabaseDriver {
 	 * piacere. In questo modo se deve eseguire più query non deve continuamente
 	 * aprire e chiudere la connessione. Questo metodo, apre la connessione e poi la ritorna
 	 */
-	public void openConnection() {
-		checkInstantiation();
-		try {
-			Driver myDriver = (Driver) Class.forName(
-					DBCredential.getValue("driver")).newInstance();
-			DriverManager.registerDriver(myDriver);
-			// creazione della connessione
-			connection = DriverManager.getConnection(
-					DBCredential.getValue("url"),
-					DBCredential.getValue("username"),
-					DBCredential.getValue("password"));
-		} catch (ClassNotFoundException e) {
-			System.out.println("Driver non trovato");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.out.println("Conessione al database non riuscita");
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public Connection getOpenedConnection(){
-		if(this.connection!=null){
-			return this.connection;
-		}
-		System.out.println("Connessione non aperta!");
-		return null;
-	}
-
-	public void closeConnection() {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			while (e.getNextException() instanceof SQLException)
-				e.printStackTrace();
-		}
-	}
-
 	public boolean userExists(String username, char[] password) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		String sql = Query.getInstance().getQuery("query_checkUser");
 
 		checkInstantiation();
-		try {
+		try (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, new String(password));
@@ -132,7 +110,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getHash");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
@@ -155,7 +133,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_role");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
@@ -189,7 +167,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getConfig");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, dispositivo.getId());
 
@@ -215,7 +193,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getUser");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
@@ -236,7 +214,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getDevice");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 
@@ -257,7 +235,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("update_profile");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, client.getEmail());
 			stmt.setString(2, client.getTelefono());
@@ -277,7 +255,7 @@ public class DatabaseDriver {
 
 		checkInstantiation();
 
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, config.getfPos());
 			stmt.setInt(2, config.getfSms());
@@ -300,7 +278,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getAdmin");
 
 		checkInstantiation();
-		try {
+		try (Connection connection=cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
@@ -325,7 +303,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getUserList");
 
 		checkInstantiation();
-		try {
+		try (Connection connection=cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery();
 
@@ -370,7 +348,7 @@ public class DatabaseDriver {
 		
 		System.out.println(sql);
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery();
 
@@ -390,7 +368,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("query_getPosizioni");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
@@ -406,7 +384,7 @@ public class DatabaseDriver {
 
 	private Posizione getPosizioneByResultSet(ResultSet rs) {
 		Posizione pos= null;
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			pos=new Posizione(getDispositivoFromId(rs.getInt("dispositivo")));
 			pos.setTimestamp(rs.getTimestamp(2));
 			pos.setCoordinate((PGpoint)rs.getObject("coordinate"));
@@ -422,7 +400,7 @@ public class DatabaseDriver {
 		String res[]=new String[2];
 		String sql = Query.getInstance().getQuery("query_getIpPort");
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 		rs = stmt.executeQuery();
@@ -442,7 +420,7 @@ public class DatabaseDriver {
 		String sql = Query.getInstance().getQuery("insert_posizione");
 
 		checkInstantiation();
-		try {
+		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, posizione.getDispositivo().getId());
 			stmt.setTimestamp(2, posizione.getTimestamp());
@@ -464,7 +442,7 @@ public class DatabaseDriver {
 			String sql = Query.getInstance().getQuery("query_getPosizioni");
 
 			checkInstantiation();
-			try {
+			try  (Connection connection=cpds.getConnection()){
 				stmt = connection.prepareStatement(sql);
 				stmt.setInt(1, id);
 				rs = stmt.executeQuery();
