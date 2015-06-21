@@ -380,25 +380,49 @@ public class DatabaseDriver {
 		}
 		return users;
 	}
+<<<<<<< HEAD
+	
+	
+	public String[] getIpPort(int id) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		String res[]=new String[2];
+		String sql = Query.getInstance().getQuery("query_getIpPort");
+=======
 
 	public List<Posizione> getPosizioni(Integer id) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		List<Posizione> posizioni = new ArrayList<Posizione>();
 		String sql = Query.getInstance().getQuery("query_getPosizioni");
+>>>>>>> master
 
 		checkInstantiation();
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
+<<<<<<< HEAD
+
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				res[0]=rs.getString("ip");
+				res[1]=Integer.toString(rs.getInt("porta"));
+				
+				
+=======
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				posizioni.add(getPosizioneByResultSet(rs));
+>>>>>>> master
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
+		return res;
+	}
+=======
 		return posizioni;
 	}
 
@@ -414,4 +438,5 @@ public class DatabaseDriver {
 		return pos;
 	}
 
+>>>>>>> master
 }

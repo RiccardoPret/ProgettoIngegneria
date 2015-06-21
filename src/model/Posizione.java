@@ -2,12 +2,12 @@ package model;
 
 import java.sql.Timestamp;
 
-import util.Coordinate;
+import org.postgresql.geometric.PGpoint;
 
 
 public class Posizione {
 	Dispositivo dispositivo;
-	Coordinate coordinate;
+	PGpoint coordinate;
 	Timestamp timestamp;
 	
 	public Posizione(Dispositivo device){
@@ -17,10 +17,16 @@ public class Posizione {
 	public Dispositivo getDispositivo() {
 		return dispositivo;
 	}
-	public Coordinate getCoordinate() {
+	public PGpoint getCoordinate() {
 		return coordinate;
 	}
-	public void setCoordinate(Coordinate coordinate) {
+	public double getX(){
+		return this.coordinate.x;
+	}
+	public double getY(){
+		return this.coordinate.y;
+	}
+	public void setCoordinate(PGpoint coordinate) {
 		this.coordinate = coordinate;
 	}
 	public Timestamp getTimestamp() {

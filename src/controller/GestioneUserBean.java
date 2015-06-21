@@ -23,13 +23,13 @@ public class GestioneUserBean implements Serializable {
 	private UserFilter filtro;
 
 	public GestioneUserBean() {
-		ds = new DataSource();
-		init();
-		aggiornaUserList();
+		ds = new DataSource();		
 	}
 	
+	@PostConstruct
 	public void init(){
 		filtro= new UserFilter();
+		aggiornaUserList();
 	}
 
 	public void aggiornaUserList(){
@@ -44,8 +44,6 @@ public class GestioneUserBean implements Serializable {
 	}
 
 	public Configurazione getCurrentUserConfigurazione() {
-		this.configUserVisited = ds.getConfigurazione(userVisited
-				.getDispositivo());
 		return this.configUserVisited;
 	}
 
@@ -53,6 +51,8 @@ public class GestioneUserBean implements Serializable {
 		System.out.println("prerecupero");
 		this.userVisited = ds.getUser(username);
 		System.out.println("post recupero: "+userVisited.getUsername());
+		this.configUserVisited = ds.getConfigurazione(userVisited
+				.getDispositivo());
 		return "dettaglio_utente";
 	}
 	

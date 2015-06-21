@@ -19,9 +19,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import model.Configurazione;
 import controller.DatabaseDriver;
-import controller.Query;
 
 public class MyLoginModule implements LoginModule {
 
