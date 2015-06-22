@@ -361,7 +361,7 @@ public class DatabaseDriverC3P0 {
 		return users;
 	}
 
-	public List<Posizione> getPosizioni(Integer id) {
+	public List<Posizione> getPosizioni(Dispositivo dis) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		List<Posizione> posizioni = new ArrayList<Posizione>();
@@ -370,11 +370,11 @@ public class DatabaseDriverC3P0 {
 		checkInstantiation();
 		try  (Connection connection=cpds.getConnection()){
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setInt(1, dis.getId());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				posizioni.add(getPosizioneByResultSet(rs));
+				posizioni.add(getPosizioneByResultSet(rs,dis));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -382,10 +382,10 @@ public class DatabaseDriverC3P0 {
 		return posizioni;
 	}
 
-	private Posizione getPosizioneByResultSet(ResultSet rs) {
+	private Posizione getPosizioneByResultSet(ResultSet rs,Dispositivo dis) {
 		Posizione pos= null;
 		try  (Connection connection=cpds.getConnection()){
-			pos=new Posizione(getDispositivoFromId(rs.getInt("dispositivo")));
+			pos=new Posizione(dis);
 			pos.setTimestamp(rs.getTimestamp(2));
 			pos.setCoordinate((PGpoint)rs.getObject("coordinate"));
 		} catch (SQLException e) {
@@ -435,7 +435,7 @@ public class DatabaseDriverC3P0 {
 		return false;			
 	}
 
-	public Posizione getUltimaPosizione(Integer id) {
+	public Posizione getUltimaPosizione(Dispositivo dis) {
 			ResultSet rs = null;
 			PreparedStatement stmt = null;
 			Posizione posizione = null;
@@ -444,11 +444,11 @@ public class DatabaseDriverC3P0 {
 			checkInstantiation();
 			try  (Connection connection=cpds.getConnection()){
 				stmt = connection.prepareStatement(sql);
-				stmt.setInt(1, id);
+				stmt.setInt(1, dis.getId());
 				rs = stmt.executeQuery();
 
 				if (rs.next()) {
-					posizione=new Posizione(getDispositivoFromId(id));
+					posizione=new Posizione(dis);
 					posizione.setTimestamp(rs.getTimestamp(2));
 					posizione.setCoordinate((PGpoint) rs.getObject(3));					
 				}
@@ -457,6 +457,26 @@ public class DatabaseDriverC3P0 {
 			}
 			return posizione;
 		
+	}
+
+	public String getMail(int id) {
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		String sql = Query.getInstance().getQuery("query_getMail");
+		String mail=null;
+		checkInstantiation();
+		try  (Connection connection=cpds.getConnection()){
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				mail=rs.getString(1);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mail;
 	}
 
 }

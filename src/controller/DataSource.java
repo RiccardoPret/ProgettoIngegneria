@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
+
 import model.Admin;
 import model.Configurazione;
 import model.Dispositivo;
@@ -68,7 +69,7 @@ public class DataSource implements Serializable {
 	 */
 	public List<Posizione> getPosizioni(Dispositivo dispositivo) {
 		List<Posizione> posizioni=null;
-		posizioni=driver.getPosizioni(dispositivo.getId());
+		posizioni=driver.getPosizioni(dispositivo);
 		return posizioni;
 	}
 	
@@ -77,8 +78,15 @@ public class DataSource implements Serializable {
 	 * */
 	public Posizione getUltimaPosizione(Dispositivo dispositivo){
 		Posizione posizione=null;
-		posizione=driver.getUltimaPosizione(dispositivo.getId());
+		posizione=driver.getUltimaPosizione(dispositivo);
 		return posizione;
+	}
+
+	public String getMail(int id) {
+		// TODO Auto-generated method stub
+		String mail= null;
+		mail=driver.getMail(id);
+		return mail;
 	}
 
 }

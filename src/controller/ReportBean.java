@@ -53,7 +53,10 @@ public class ReportBean implements Serializable{
 	}
 	
 	public void posizioniUtente() {
+		long ini=System.currentTimeMillis();
 		this.reportPosizioni=ds.getPosizioni(clientBean.getUser().getDispositivo());
+		System.out.println("fatto:"+(System.currentTimeMillis()-ini)*1000);
+		
 	}
 
 	public Posizione getCurrentPosition(){
@@ -61,7 +64,7 @@ public class ReportBean implements Serializable{
 	}
 	
 	public List<Posizione> getLastPositions(){
-		System.out.println(clientBean.getUser().getUsername());
+		//System.out.println(clientBean.getUser().getUsername());
 		return this.reportPosizioni;
 	}
 	public Timestamp getTimestamp(){
