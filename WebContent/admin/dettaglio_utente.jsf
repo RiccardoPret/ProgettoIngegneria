@@ -11,7 +11,7 @@
 <h:body>
 	<ui:composition template="/templates/layout.jsf">
 		<ui:define name="windowTitle">
-				#{msgs.name} | Utenti
+				#{msgs.name} Admin | utenti
 			</ui:define>
 		<ui:define name="sidebar">
 			<ui:include src="/admin/sidebar_admin.jsf" />

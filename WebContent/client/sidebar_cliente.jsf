@@ -17,8 +17,8 @@
 			<nav id="nav">
 				<ul>
 					<li class="#{view == '/client/index.jsf' ? 'current' : ''}"><h:commandLink action="index" value="Home"/></li>	
-					<li class="#{view == '/cliente/realtime.jsf' ? 'current' : ''}"><h:commandLink action="realtime" value="Posizione Attuale"/></li>	
-					<li class="#{view == '/cliente/report.jsf' ? 'current' : ''}"><h:commandLink action="report" value="Reportistica"/></li>	
+					<li class="#{view == '/client/realtime.jsf' ? 'current' : ''}"><h:commandLink action="realtime" value="Posizione Attuale"/></li>	
+					<li class="#{view == '/client/report.jsf' ? 'current' : ''}"><h:commandLink action="report" value="Reportistica"/></li>	
 				</ul>
 			</nav>
 		</h:form>
