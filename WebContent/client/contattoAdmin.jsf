@@ -23,7 +23,7 @@
 					<h2>Contatta Amministratore</h2>
 				</header>
 				<h:panelGroup layout="block" id="info_utente">
-					<p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="600" />
+					<p:editor id="editor" widgetVar="editorWidget" width="600" />
    					 <h:panelGrid columns="2" style="margin-top: 10px">
        					 <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
  
