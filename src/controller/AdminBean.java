@@ -13,6 +13,11 @@ import model.Admin;
 @SessionScoped
 public class AdminBean implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2837078055244619171L;
+
 	@ManagedProperty(value="#{securityBacking}")
 	private SecurityBacking securityBacking;
 	

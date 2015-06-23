@@ -2,8 +2,6 @@ package controller;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +18,8 @@ import org.postgresql.geometric.PGpoint;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import util.Query;
+import util.ReservedReader;
 import util.UserFilter;
 
 /*
@@ -38,21 +38,21 @@ public class DatabaseDriverC3P0 {
 
 	private DatabaseDriverC3P0() {
 		super();
-		 cpds = new ComboPooledDataSource(); 
-		 try {
+		cpds = new ComboPooledDataSource();
+		try {
 			cpds.setDriverClass(DBCredential.getValue("driver"));
 		} catch (PropertyVetoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} //loads the jdbc driver 
-		 cpds.setJdbcUrl(DBCredential.getValue("url")); 
-		 cpds.setUser(DBCredential.getValue("username")); 
-		 cpds.setPassword(DBCredential.getValue("password")); 
-		 // the settings below are optional -- c3p0 can work with defaults 
-		 cpds.setMinPoolSize(5); 
-		 cpds.setAcquireIncrement(5); 
-		 cpds.setMaxPoolSize(20);
-		
+		} // loads the jdbc driver
+		cpds.setJdbcUrl(DBCredential.getValue("url"));
+		cpds.setUser(DBCredential.getValue("username"));
+		cpds.setPassword(DBCredential.getValue("password"));
+		// the settings below are optional -- c3p0 can work with defaults
+		cpds.setMinPoolSize(5);
+		cpds.setAcquireIncrement(5);
+		cpds.setMaxPoolSize(20);
+
 	}
 
 	public static DatabaseDriverC3P0 getInstance() {
@@ -63,7 +63,7 @@ public class DatabaseDriverC3P0 {
 			System.out.println(DBCredential.getValue("driver"));
 			System.out.println(DBCredential.getValue("url"));
 			System.out.println(DBCredential.getValue("username"));
-			System.out.println(DBCredential.getValue("password"));						
+			System.out.println(DBCredential.getValue("password"));
 		}
 		return instance;
 	}
@@ -78,17 +78,18 @@ public class DatabaseDriverC3P0 {
 
 	/*
 	 * L'utene ha la possibilità di aprirsi e chiudersi la connessione a
-	 * piacere. In questo modo se deve eseguire più query non deve continuamente
-	 * aprire e chiudere la connessione. Questo metodo, apre la connessione e poi la ritorna
+	 * piacere. In questo modo se deve eseguire più query non deve
+	 * continuamente aprire e chiudere la connessione. Questo metodo, apre la
+	 * connessione e poi la ritorna
 	 */
-	
+
 	public boolean userExists(String username, char[] password) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		String sql = Query.getInstance().getQuery("query_checkUser");
 
 		checkInstantiation();
-		try (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, new String(password));
@@ -110,7 +111,7 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_getHash");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
@@ -133,7 +134,7 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_role");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
@@ -167,7 +168,7 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_getConfig");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, dispositivo.getId());
 
@@ -193,13 +194,13 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_getUser");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				user=getUserByResultSet(rs);
+				user = getUserByResultSet(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -214,7 +215,7 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_getDevice");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 
@@ -235,7 +236,7 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("update_profile");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, client.getEmail());
 			stmt.setString(2, client.getTelefono());
@@ -255,7 +256,7 @@ public class DatabaseDriverC3P0 {
 
 		checkInstantiation();
 
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, config.getfPos());
 			stmt.setInt(2, config.getfSms());
@@ -278,14 +279,14 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_getAdmin");
 
 		checkInstantiation();
-		try (Connection connection=cpds.getConnection()) {
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				admin= new Admin(username);
+				admin = new Admin(username);
 				admin.setNome(rs.getString("nome"));
 				admin.setCognome(rs.getString("cognome"));
 				admin.setRuolo("admin");
@@ -295,15 +296,15 @@ public class DatabaseDriverC3P0 {
 		}
 		return admin;
 	}
-	
-	public List<User> getUsers(){
+
+	public List<User> getUsers() {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		List<User> users = new ArrayList<User>();
 		String sql = Query.getInstance().getQuery("query_getUserList");
 
 		checkInstantiation();
-		try (Connection connection=cpds.getConnection()) {
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery();
 
@@ -317,9 +318,9 @@ public class DatabaseDriverC3P0 {
 	}
 
 	private User getUserByResultSet(ResultSet rs) {
-		User user= null;
+		User user = null;
 		try {
-			user=new User(rs.getString("username"));
+			user = new User(rs.getString("username"));
 
 			user.setDispositivo(getDispositivoFromId(rs.getInt("dispositivo")));
 			user.setEmail(rs.getString("mail"));
@@ -335,20 +336,21 @@ public class DatabaseDriverC3P0 {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		List<User> users = new ArrayList<User>();
-		String sql = Query.getInstance().getQuery("query_getUserList")+" where TRUE=TRUE";
+		String sql = Query.getInstance().getQuery("query_getUserList")
+				+ " where TRUE=TRUE";
 		System.out.println("Inizio costruzione query");
-		if(!filtro.getUsername().isEmpty())
-			sql+=" AND username='"+filtro.getUsername()+"'";
-		if(filtro.getIdDispositivo()!=null)
-			sql+=" AND dispositivo="+filtro.getIdDispositivo();
-		if(!filtro.getEmail().isEmpty())
-			sql+=" AND mail='"+filtro.getEmail()+"'";
-		if(!filtro.getTelefono().isEmpty())
-			sql+=" AND numTelefono='"+filtro.getTelefono()+"'";
-		
+		if (!filtro.getUsername().isEmpty())
+			sql += " AND username='" + filtro.getUsername() + "'";
+		if (filtro.getIdDispositivo() != null)
+			sql += " AND dispositivo=" + filtro.getIdDispositivo();
+		if (!filtro.getEmail().isEmpty())
+			sql += " AND mail='" + filtro.getEmail() + "'";
+		if (!filtro.getTelefono().isEmpty())
+			sql += " AND numTelefono='" + filtro.getTelefono() + "'";
+
 		System.out.println(sql);
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery();
 
@@ -368,13 +370,13 @@ public class DatabaseDriverC3P0 {
 		String sql = Query.getInstance().getQuery("query_getPosizioni");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, dis.getId());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				posizioni.add(getPosizioneByResultSet(rs,dis));
+				posizioni.add(getPosizioneByResultSet(rs, dis));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -382,45 +384,44 @@ public class DatabaseDriverC3P0 {
 		return posizioni;
 	}
 
-	private Posizione getPosizioneByResultSet(ResultSet rs,Dispositivo dis) {
-		Posizione pos= null;
-		try  (Connection connection=cpds.getConnection()){
-			pos=new Posizione(dis);
+	private Posizione getPosizioneByResultSet(ResultSet rs, Dispositivo dis) {
+		Posizione pos = null;
+		try (Connection connection = cpds.getConnection()) {
+			pos = new Posizione(dis);
 			pos.setTimestamp(rs.getTimestamp(2));
-			pos.setCoordinate((PGpoint)rs.getObject("coordinate"));
+			pos.setCoordinate((PGpoint) rs.getObject("coordinate"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return pos;
 	}
-	
+
 	public String[] getIpPort(int id) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		String res[]=new String[2];
+		String res[] = new String[2];
 		String sql = Query.getInstance().getQuery("query_getIpPort");
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
-		rs = stmt.executeQuery();
-		if (rs.next()) {
-			res[0]=rs.getString("ip");
-			res[1]=Integer.toString(rs.getInt("porta"));
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				res[0] = rs.getString("ip");
+				res[1] = Integer.toString(rs.getInt("porta"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	} catch (SQLException e) {
-		e.printStackTrace();
+		return res;
 	}
-	return res;
-}
 
-	
 	public boolean insertPosizione(Posizione posizione) {
 		PreparedStatement stmt = null;
 		String sql = Query.getInstance().getQuery("insert_posizione");
 
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, posizione.getDispositivo().getId());
 			stmt.setTimestamp(2, posizione.getTimestamp());
@@ -432,51 +433,92 @@ public class DatabaseDriverC3P0 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;			
+		return false;
 	}
 
 	public Posizione getUltimaPosizione(Dispositivo dis) {
-			ResultSet rs = null;
-			PreparedStatement stmt = null;
-			Posizione posizione = null;
-			String sql = Query.getInstance().getQuery("query_getPosizioni");
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		Posizione posizione = null;
+		String sql = Query.getInstance().getQuery("query_getPosizioni");
 
-			checkInstantiation();
-			try  (Connection connection=cpds.getConnection()){
-				stmt = connection.prepareStatement(sql);
-				stmt.setInt(1, dis.getId());
-				rs = stmt.executeQuery();
+		checkInstantiation();
+		try (Connection connection = cpds.getConnection()) {
+			stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, dis.getId());
+			rs = stmt.executeQuery();
 
-				if (rs.next()) {
-					posizione=new Posizione(dis);
-					posizione.setTimestamp(rs.getTimestamp(2));
-					posizione.setCoordinate((PGpoint) rs.getObject(3));					
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (rs.next()) {
+				posizione = new Posizione(dis);
+				posizione.setTimestamp(rs.getTimestamp(2));
+				posizione.setCoordinate((PGpoint) rs.getObject(3));
 			}
-			return posizione;
-		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return posizione;
+
 	}
 
 	public String getMail(int id) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		String sql = Query.getInstance().getQuery("query_getMail");
-		String mail=null;
+		String mail = null;
 		checkInstantiation();
-		try  (Connection connection=cpds.getConnection()){
+		try (Connection connection = cpds.getConnection()) {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				mail=rs.getString(1);					
+				mail = rs.getString(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return mail;
+	}
+
+	public void activateDevice(String username) {
+
+		PreparedStatement stmt = null;
+		String sql = "select D.id_dispositivo from dispositivo d, utente u where u.dispositivo=d.id_dispositivo AND u.username=?";
+		String sql2 = "update dispositivo set attivo=TRUE where id_dispositivo=?";
+
+		try (Connection connection = cpds.getConnection()) {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				int id = rs.getInt("id_dispositivo");
+				stmt = connection.prepareStatement(sql2);
+				stmt.setInt(1, id);
+				stmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+
+	}
+public void changePassword(String password,int id_dispositivo) {
+		
+		PreparedStatement stmt = null;
+		String sql = Query.getInstance().getQuery("update_password");
+
+		try (Connection connection=cpds.getConnection()){
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1,password);
+			stmt.setInt(2, id_dispositivo);
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -11,4 +11,5 @@ query_getPosizioni=>select * from posizione where dispositivo=? order by data de
 query_getMail=>select mail from utente where dispositivo=?
 update_profile=>update utente set mail=?, numTelefono=?, linkStreaming=? where username=?
 update_setting=>update configurazione set freq_ril=?, freq_mex=?, limiteVelocita=?, messaggi=?, mail=? where dispositivo=?
+update_password=>UPDATE utente SET password=? WHERE dispositivo=?
 insert_posizione=>INSERT INTO posizione (dispositivo, data, coordinate) VALUES (?, ?, ?)

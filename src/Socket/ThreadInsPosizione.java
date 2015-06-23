@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 
 import org.postgresql.geometric.PGpoint;
 
-import controller.DatabaseDriver;
 import controller.DatabaseDriverC3P0;
 import model.Dispositivo;
 import model.Posizione;
@@ -39,7 +38,6 @@ public class ThreadInsPosizione implements Runnable {
 			                new InputStreamReader(
 			                    socket.getInputStream()));
 			        ) {
-			          String inputLine, outputLine;
 			          while( !in.ready()){}
 			          id_disp=Integer.parseInt((in.readLine()));
 			          //dd.openConnection();

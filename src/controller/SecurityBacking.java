@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 @SessionScoped
 public class SecurityBacking implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4938147772895558232L;
+
 	public String invalidateSession() {
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();

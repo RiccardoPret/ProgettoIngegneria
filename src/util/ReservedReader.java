@@ -1,4 +1,4 @@
-package controller;
+package util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -86,7 +86,7 @@ public class ReservedReader {
 		return path.toString()+"/reserved/"+this.fileName;
 	}
 
-	protected String getValue(String key){
+	public String getValue(String key){
 		return map.get(key);
 	}
 }

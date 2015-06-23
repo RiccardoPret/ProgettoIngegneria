@@ -3,11 +3,9 @@ package Socket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import controller.DatabaseDriver;
 import controller.DatabaseDriverC3P0;
 import model.Configurazione;
 import model.Dispositivo;
@@ -30,7 +28,6 @@ DatabaseDriverC3P0 dd= DatabaseDriverC3P0.getInstance();
 		                new InputStreamReader(
 		                    socket.getInputStream()));
 		        ) {
-		          String inputLine, outputLine;
 		          while( !in.ready()){}
 		          id_disp=Integer.parseInt((in.readLine()));
 		          System.out.println("id_ricevuto:"+id_disp);

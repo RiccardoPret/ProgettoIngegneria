@@ -3,9 +3,6 @@ package login;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +16,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import controller.DatabaseDriver;
+import controller.DatabaseDriverC3P0;
 
 public class MyLoginModule implements LoginModule {
 
@@ -88,47 +85,17 @@ public class MyLoginModule implements LoginModule {
 
 	// TODO testare che attivi il dispositivo
 	private void activateDevice(String username) {
-		DatabaseDriver driver = DatabaseDriver.getInstance();
-		PreparedStatement stmt = null;
-		String sql = "select D.id_dispositivo from dispositivo d, utente u where u.dispositivo=d.id_dispositivo AND u.username=?";
-		String sql2 = "update dispositivo set attivo=TRUE where id_dispositivo=?";
-		driver.openConnection();
-
-		try {
-			stmt = driver.getOpenedConnection().prepareStatement(sql);
-			stmt.setString(1, username);
-			ResultSet rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				int id = rs.getInt("id_dispositivo");
-				stmt = driver.getOpenedConnection().prepareStatement(sql2);
-				stmt.setInt(1, id);
-				stmt.executeUpdate();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		driver.closeConnection();
+		DatabaseDriverC3P0 driver = DatabaseDriverC3P0.getInstance();
+		driver.activateDevice(username);
+		
 	}
 
-	// Non usato. Può essere usato al posto di quello che cripta le password:
-	// isValidUserSH
-	private boolean isValidUser() {
-		boolean userExists;
 
-		DatabaseDriver driver = DatabaseDriver.getInstance();
-		driver.openConnection();
-		userExists = driver.userExists(this.username, this.password);
-		driver.closeConnection();
-		return userExists;
-	}
 
 	private boolean isValidUserSH() {
 
-		DatabaseDriver driver = DatabaseDriver.getInstance();
-		driver.openConnection();
+		DatabaseDriverC3P0 driver = DatabaseDriverC3P0.getInstance();
 		String hash = driver.userExistsSH(this.username);
-		driver.closeConnection();
 		System.out.println(this.password);
 		System.out.println(hash);
 
@@ -173,10 +140,8 @@ public class MyLoginModule implements LoginModule {
 	private List<String> getRoles() {
 		List<String> roleList = new ArrayList<String>();
 
-		DatabaseDriver driver = DatabaseDriver.getInstance();
-		driver.openConnection();
+		DatabaseDriverC3P0 driver = DatabaseDriverC3P0.getInstance();
 		roleList = driver.getRoles(this.username);
-		driver.closeConnection();
 
 		return roleList;
 	}

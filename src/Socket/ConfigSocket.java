@@ -8,19 +8,19 @@ public class ConfigSocket implements Runnable {
 	public boolean active = false;
 	ServerSocket configPort;
 	
-	public void ConfigSocket(){
-
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public ConfigSocket(){
 		try {
 			configPort=new ServerSocket(4000);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 
 		while (active) {
 			try {

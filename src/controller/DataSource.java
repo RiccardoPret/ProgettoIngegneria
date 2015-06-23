@@ -1,10 +1,15 @@
 package controller;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 
 
+
+
+import login.PasswordHash;
 import model.Admin;
 import model.Configurazione;
 import model.Dispositivo;
@@ -18,6 +23,10 @@ import util.UserFilter;
  */
 public class DataSource implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2281381273706923503L;
 	private DatabaseDriverC3P0 driver;
 
 
@@ -87,6 +96,17 @@ public class DataSource implements Serializable {
 		String mail= null;
 		mail=driver.getMail(id);
 		return mail;
+	}
+	
+	public void changePassword(String password,int id_dispositivo){
+		String hash=null;
+		try {
+			hash = PasswordHash.createHash(password);
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.changePassword(hash, id_dispositivo);
 	}
 
 }

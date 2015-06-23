@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import controller.DatabaseDriver;
 import controller.DatabaseDriverC3P0;
 
 public class ThredAggConfigurazione implements Runnable {

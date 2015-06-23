@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.SlideEndEvent;
@@ -22,6 +21,11 @@ import model.Posizione;
 @ViewScoped
 public class ReportBean implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3467908509135820685L;
+
 	@ManagedProperty(value="#{clientBean}")
 	private ClientBean clientBean;
 	

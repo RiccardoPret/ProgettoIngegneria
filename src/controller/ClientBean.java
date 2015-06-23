@@ -17,6 +17,11 @@ import model.User;
 @SessionScoped
 public class ClientBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7231438830346457810L;
+
 	@ManagedProperty(value="#{securityBacking}")
 	private SecurityBacking securityBacking;
 	

@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import util.UserFilter;
 import model.Configurazione;
@@ -15,12 +17,18 @@ import model.User;
 @SessionScoped
 public class GestioneUserBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1808122569173838766L;
+
 	private DataSource ds;
 
 	private User userVisited;
 	private Configurazione configUserVisited;
 	private List<User> users;
 	private UserFilter filtro;
+	private String password;
 
 	public GestioneUserBean() {
 		ds = new DataSource();		
@@ -58,5 +66,16 @@ public class GestioneUserBean implements Serializable {
 	
 	public UserFilter getUserFilter(){
 		return this.filtro;
+	}
+	public String getPassword(){
+		return "";
+	}
+	public void setPassword(String s){
+		this.password=s;
+	}
+	public void aggiornaPassword(){
+		ds.changePassword(password, userVisited.getDispositivo().getId());
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Valori aggiornati"));
+
 	}
 }

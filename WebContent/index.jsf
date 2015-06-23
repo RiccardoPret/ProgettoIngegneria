@@ -13,9 +13,11 @@
 	<body>
 		<ui:composition template="/templates/layout.jsf">
 			<ui:define name="windowTitle">
-	    		#{msgs.AgencyHome}
+	    		#{msgs.name} | Login
 	  		</ui:define>
-
+	  		<ui:define name="sidebar">
+	  			<ui:include src="/sidebar.jsf" />
+	  		</ui:define>
 			<ui:define name="content">
 				<form id="loginForm" method="post" action="j_security_check">
 					<input name="j_username" type="text" placeholder="Username" /> 
