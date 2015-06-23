@@ -27,18 +27,24 @@
 			<ui:define name="content">
 				<h:form>
 					<h:panelGroup layout="block" id="map">
-						<p:gmap
-							center="#{posizioneAttualeBean.pos.y}, #{posizioneAttualeBean.pos.x}"
-							zoom="15" type="hybrid" model="#{posizioneAttualeBean.model}"
-							style="height:500px" />
-						<p:poll interval="2" listener="#{posizioneAttualeBean.aggiornaPos}" update="map" />
+						<h:panelGroup layout="block" rendered="#{posizioneAttualeBean.existPosition()}">
+							<p:gmap
+								center="#{posizioneAttualeBean.pos.y}, #{posizioneAttualeBean.pos.x}"
+								zoom="15" type="hybrid" model="#{posizioneAttualeBean.model}"
+								style="height:500px" />
+							
+						</h:panelGroup>
+						<h:panelGroup layout="block" rendered="#{!posizioneAttualeBean.existPosition()}">
+							non ci sono posizioni
+						</h:panelGroup>
 					</h:panelGroup>
+					<p:poll interval="2" listener="#{posizioneAttualeBean.aggiornaPos}" update="map" />
 				</h:form>
 				<p:commandButton value="start realtime" id="start" actionListener="#{posizioneAttualeBean.startRealTime}" />
 				<p:commandButton value="stop realtime" id="stop" actionListener="#{posizioneAttualeBean.stopRealTime}" />
 
 				<br /> <br /> <br />
-				<h:panelGroup layout="block">
+				<h:panelGroup layout="block" rendered="#{reportBean.clientBean.user.video!='NA'}">
 					<h:outputText value="&lt;iframe width=&quot;100%&quot; height=&quot;500px&quot; src=&quot;#{reportBean.clientBean.user.video}&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8" escape="false" style="height:0px;width:0px"/> 
 				</h:panelGroup>				
 			</ui:define>

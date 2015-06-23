@@ -63,7 +63,8 @@ public class PosizioneAttualeBean {
 	public void aggiornaPos() {
 		// TODO Auto-generated method stub
 		pos=ds.getUltimaPosizione(dis);
-		updateModel();
+		if(existPosition())
+			updateModel();
 	}
 
 	public ClientBean getClientBean(){

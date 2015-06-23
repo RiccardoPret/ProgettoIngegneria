@@ -11,8 +11,7 @@
 </head>
 <body>
 	<ui:composition>
-		<h1 id="logo"><a href="#">#{msgs.name}</a></h1>
-
+	<h1 id="logo"><h:link outcome="/index.jsf">#{msgs.name}</h:link></h1>
 	</ui:composition>
 </body>
 </html>

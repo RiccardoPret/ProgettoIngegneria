@@ -22,7 +22,9 @@
 			<ui:define name="content">		
 				<h:form>
 					<p>utente o password sbagliati</p>
+					<h:commandButton action="#{securityBacking.invalidateSession}" value="Torna alla home" />
 				</h:form>
+
 			</ui:define>
 		</ui:composition>
 	</body>
