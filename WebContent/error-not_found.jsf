@@ -23,9 +23,6 @@
 				<h:form>
 					<p>risorsa non trovata</p>
 					<h:commandButton action="#{securityBacking.invalidateSession}" value="Torna alla home" />
-					<h:graphicImage library="images" name="giphy.gif" />
-					<h:outputText value="&lt;iframe width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/U1ei5rwO7ZI?start=38&amp;autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen>&lt;/iframe>" id="ot8"
-escape="false" style="height:0px;width:0px"/> 
 				</h:form>
 			</ui:define>
 		</ui:composition>

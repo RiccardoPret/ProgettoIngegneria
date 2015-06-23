@@ -7,19 +7,21 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
-<h:head>Admin Page</h:head>
+
 <h:body>
 	<ui:composition template="/templates/layout.jsf">
 		<ui:define name="windowTitle">
-				#{msgs.name} Admin | profilo
+				#{msgs.name} | profilo
 			</ui:define>
 		<ui:define name="sidebar">
-			<ui:include src="/admin/sidebar_admin.jsf" />
+			<ui:include src="/client/sidebar_cliente.jsf" />
 		</ui:define>
 
 		<ui:define name="content">
-			<h2>Profilo</h2>
 			<h:form>
+				<header>
+					<h2>Contatta Amministratore</h2>
+				</header>
 				<h:panelGroup layout="block" id="info_utente">
 					<p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="600" />
    					 <h:panelGrid columns="2" style="margin-top: 10px">
@@ -34,6 +36,5 @@
 			</h:form>
 		</ui:define>
 	</ui:composition>
-
 </h:body>
 </html>
