@@ -1,19 +1,19 @@
 package model;
 
 public class Configurazione {
-	
+
 	private Dispositivo dispositivo;
-	private Integer fPos;	//secondi
-	private Integer fSms;	//secondi
+	private Integer fPos; // secondi
+	private Integer fSms; // secondi
 	private boolean smsEnabled;
 	private boolean emailEnabled;
-	private Integer speedAlarm;		//km/h
-	
-	public Configurazione(Dispositivo dispositivo){
-		this.dispositivo=dispositivo;
+	private Integer speedAlarm; // km/h
+
+	public Configurazione(Dispositivo dispositivo) {
+		this.dispositivo = dispositivo;
 	}
-	
-	public Dispositivo getDispositivo(){
+
+	public Dispositivo getDispositivo() {
 		return this.dispositivo;
 	}
 
@@ -22,7 +22,8 @@ public class Configurazione {
 	}
 
 	public void setfPos(Integer fPos) {
-		this.fPos = fPos;
+		if (fPos > 0)
+			this.fPos = fPos;
 	}
 
 	public Integer getfSms() {
@@ -30,7 +31,8 @@ public class Configurazione {
 	}
 
 	public void setfSms(Integer fSms) {
-		this.fSms = fSms;
+		if (fPos > 0)
+			this.fSms = fSms;
 	}
 
 	public boolean isSmsEnabled() {
@@ -54,7 +56,8 @@ public class Configurazione {
 	}
 
 	public void setspeedAlarm(Integer speed) {
-		this.speedAlarm = speed;
+		if (fPos > 0)
+			this.speedAlarm = speed;
 	}
-	
+
 }
